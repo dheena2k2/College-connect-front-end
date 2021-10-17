@@ -1,0 +1,10 @@
+td {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.fit-box {
+    width: fit-content;
+    background-color: black;
+    opacity: 0.2;
+}
