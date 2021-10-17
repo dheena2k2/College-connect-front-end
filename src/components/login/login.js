@@ -8,18 +8,25 @@ import TextField from '@mui/material/TextField';
 class InputBox extends React.Component {
     render() {
         return (
-            <div>
-                <Box class='fit-box'>
+                <Box className='fit-box'>
                     <center>
+                        <h1>Login</h1>
                         <table>
                             <tr>
                                 <td colspan={2}>
-                                    <TextField id='username' label='Username' variant='filled' />
+                                    <TextField
+                                    id='username'
+                                    label='Username'
+                                    variant='filled' />
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan={2}>
-                                    <TextField id='password' label='Password' type='password' variant='filled' />
+                                    <TextField
+                                    id='password'
+                                    label='Password'
+                                    type='password'
+                                    variant='filled' />
                                 </td>
                             </tr>
                             <tr>
@@ -33,7 +40,6 @@ class InputBox extends React.Component {
                         </table>
                     </center>
                 </Box>
-            </div>
         );
     }
 }
@@ -42,7 +48,9 @@ class InputBox extends React.Component {
 export default class Login extends React.Component {
     render() {
         return (
-            <div>
+            <div className='container' style={{
+                backgroundImage: `url(${process.env.PUBLIC_URL + '/img/login_bg.jpg'})`
+            }}>
                 <InputBox />
             </div>
         );
