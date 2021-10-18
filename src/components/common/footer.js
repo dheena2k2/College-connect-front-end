@@ -38,7 +38,7 @@ export default class Footer extends React.Component {
 
     render() {
         return (
-            <div className='container'>
+            <div className='footer-container'>
                 <Options loggedin={this.state.loggedin} />
             </div>
         );
