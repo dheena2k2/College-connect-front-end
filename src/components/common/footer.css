@@ -1,16 +1,3 @@
-.logo-box {
-    font-size: 30px;
-    font-weight: bold;
-}
-
-.logo-p1 {
-    color: #85810E;
-}
-
-.logo-p2 {
-    color: #2aa061;
-}
-
 .options-container {
     display: flex;
     flex-direction: row;

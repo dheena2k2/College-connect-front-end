@@ -2,15 +2,6 @@ import React from 'react';
 import './footer.css'
 import Button from '@mui/material/Button'
 
-
-function Logo() {
-    return (
-        <div className='logo-box'>
-            <span className='logo-p1'>College</span><span className='logo-p2'>Connect</span>
-        </div>
-    );
-}
-
 class Options extends React.Component {
     constructor(props) {
         super(props)
