@@ -1,19 +1,28 @@
 import React from 'react';
-import './login.css'
+import './login.css';
 import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+
+
+function Logo() {
+    return (
+        <div className='logo-box'>
+            <span className='logo-p1'>College</span><span className='logo-p2'>Connect</span>
+        </div>
+    );
+}
 
 
 class InputBox extends React.Component {
     render() {
         return (
-                <Box className='fit-box'>
+                <div className='fit-box'>
                     <center>
                         <h1>Login</h1>
                         <table>
+                            <tbody>
                             <tr>
-                                <td colspan={2}>
+                                <td colSpan={2}>
                                     <TextField
                                     id='username'
                                     label='Username'
@@ -21,7 +30,7 @@ class InputBox extends React.Component {
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan={2}>
+                                <td colSpan={2}>
                                     <TextField
                                     id='password'
                                     label='Password'
@@ -37,9 +46,10 @@ class InputBox extends React.Component {
                                     <Button variant='text'>New user</Button>
                                 </td>
                             </tr>
+                            </tbody>
                         </table>
                     </center>
-                </Box>
+                </div>
         );
     }
 }
@@ -51,7 +61,8 @@ export default class Login extends React.Component {
             <div className='container' style={{
                 backgroundImage: `url(${process.env.PUBLIC_URL + '/img/login_bg.jpg'})`
             }}>
-                <InputBox />
+                <div><Logo /></div>
+                <div><InputBox /></div>
             </div>
         );
     }
