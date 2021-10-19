@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 import './login.css';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -38,6 +39,7 @@ class InputBox extends React.Component {
     }
 
     onNewUser() {
+        window.location.href = '/newuser'
         console.log('New user request detected')
     }
 
@@ -60,8 +62,16 @@ class InputBox extends React.Component {
                 variant='outlined' />
 
                 <div className='button-container'>
-                    <Button variant='text' onClick={this.onLogin}>Login</Button>
-                    <Button variant='text' onClick={this.newUser}>New user</Button>
+                    <Button
+                    variant='text'
+                    onClick={this.onLogin} >
+                        Login
+                    </Button>
+                    <Button
+                    variant='text'
+                    onClick={this.newUser}>
+                        New user
+                    </Button>
                 </div>
             </div>
         );
