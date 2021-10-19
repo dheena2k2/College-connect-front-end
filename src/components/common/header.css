@@ -1,5 +1,5 @@
 .header-logo-container {
-    font-size: 30px;
+    font-size: 50px;
     font-weight: bold;
 }
 
@@ -12,8 +12,8 @@
 }
 
 .header-container {
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     background-color: #3a2430;
     
     display: flex;
