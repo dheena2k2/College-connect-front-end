@@ -1,11 +1,12 @@
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Switch } from 'react-router-dom';
 import { Route } from 'react-router-dom';
-import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
+import Header from './components/common/header';
+import Footer from './components/common/footer';
 import Login from './components/login/login';
 import NewUser from './components/newuser/newuser';
-import Footer from './components/common/footer';
-import Header from './components/common/header';
+import Profile from './components/showprofile/profile'
 import { useCookies } from 'react-cookie';
 import './App.css';
 
@@ -76,6 +77,10 @@ function App() {
           <Header loggedin={isLoggedin} />
           <NewUser />
         </LoggedOutRoute>
+        <PrivateRoute path='/profile' cookies={cookies}>
+          <Header loggedin={isLoggedin} />
+          <Profile />
+        </PrivateRoute>
         <PrivateRoute path='/' cookies={cookies}>
           <Header loggedin={isLoggedin} />
         </PrivateRoute>
