@@ -6,20 +6,17 @@ import Login from './components/login/login';
 import NewUser from './components/newuser/newuser';
 import Footer from './components/common/footer';
 import Header from './components/common/header';
-import Cookies from 'universal-cookie';
+import { useCookies } from 'react-cookie';
 import './App.css';
 
 
-const cookies = new Cookies();
-
-
-function findIsLoggedin() {
-  return (cookies.get('isLoggedin') === 'true');
+function findIsLoggedin(cookies) {
+  return (cookies.isLoggedin === 'true');
 }
 
 
-function PrivateRoute({children, ...rest}) {
-  const isLoggedin = findIsLoggedin()
+function PrivateRoute({children, cookies, ...rest}) {
+  const isLoggedin = findIsLoggedin(cookies)
 
   return (
     <Route
@@ -40,11 +37,15 @@ function PrivateRoute({children, ...rest}) {
 
 
 function App() {
-  if(!(cookies.get('isLoggedin'))){
-    cookies.set('isLoggedin', false, {path: '/'})
+  const [cookies, setCookie] = useCookies(['isLoggedin']);
+
+  if(!cookies.isLoggedin) {
+    setCookie('isLoggedin', false, {path: '/'})
   }
 
-  const isLoggedin = (cookies.get('isLoggedin') === 'true')
+  console.log("Cookie value ", cookies.isLoggedin)
+
+  const isLoggedin = findIsLoggedin(cookies)
   
   return (
     <Router className="App">
@@ -56,11 +57,11 @@ function App() {
           <Header loggedin={isLoggedin} />
           <NewUser />
         </Route>
-        <PrivateRoute path='/'>
+        <PrivateRoute path='/' cookies={cookies}>
           <Header loggedin={isLoggedin} />
         </PrivateRoute>
       </Switch>
-      <Footer loggedin={isLoggedin} />
+      <Footer />
     </Router>
   );
 }

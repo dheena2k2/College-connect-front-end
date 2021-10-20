@@ -2,6 +2,25 @@ import React from 'react';
 import './login.css';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+
+
+function authenticateUser(details){
+    const test_details = {
+        username: 'test_usr',
+        password: 'test_pass'
+    }
+
+    let uid = null
+
+    if(details.username === test_details.username && details.password === test_details.password) {
+        uid = 'ID_test'
+    }
+
+    return uid;
+}
 
 
 function Logo() {
@@ -32,9 +51,13 @@ class InputBox extends React.Component {
     }
 
     onSubmit() {
-        console.log('Submit action detected')
-        console.log('username: '+this.state.username)
-        console.log('password: '+this.state.password)
+
+        const uid = authenticateUser(this.state)
+        if(uid) {
+            this.props.setCookie('isLoggedin', true, {path: '/'})
+            this.props.setCookie('uid', uid, {path: '/'})
+            this.props.onSuccessfulAuth()
+        }
     }
 
     onNewUser() {
@@ -78,7 +101,7 @@ class InputBox extends React.Component {
 }
 
 
-export default class Login extends React.Component {
+class LoginPage extends React.Component {
     constructor(props) {
         super(props)
         this.state = {visible: false}
@@ -92,8 +115,25 @@ export default class Login extends React.Component {
         return (
             <div className='login-container'>
                 {this.state.visible && <Logo />}
-                {this.state.visible && <InputBox />}
+                {this.state.visible && <InputBox
+                onSuccessfulAuth={this.props.onSuccessfulAuth}
+                setCookie={this.props.setCookie} />}
             </div>
         );
     }
 }
+
+function Login() {
+    const [cookies, setCookie] = useCookies(['isLoggedin', 'uid']);
+    let history = useHistory()
+    let location = useLocation()
+    let { from } = location.state || { from: { pathname: "/" } };
+
+    return (
+        <LoginPage
+        onSuccessfulAuth={() => history.replace(from)}
+        setCookie={setCookie} />
+    );
+}
+
+export default Login;
