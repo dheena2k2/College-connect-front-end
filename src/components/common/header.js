@@ -5,6 +5,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { ListItemIcon, Divider } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
+import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import EditIcon from '@mui/icons-material/Edit';
 import GroupsIcon from '@mui/icons-material/Groups';
@@ -12,6 +13,10 @@ import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useCookies } from 'react-cookie';
 
+
+function viewHome() {
+    window.location.href = '/'
+}
 
 function viewProfile() {
     window.location.href = '/profile'
@@ -46,6 +51,12 @@ function Options(props) {
         PaperProps={props.PaperProps}
         transformOrigin={props.transformOrigin}
         anchorOrigin={props.anchorOrigin} >
+            <MenuItem onClick={viewHome}>
+                <ListItemIcon>
+                    <HomeIcon />
+                </ListItemIcon>
+                Home
+            </MenuItem>
             <MenuItem onClick={viewProfile}>
                 <ListItemIcon>
                     <AccountCircleIcon />
