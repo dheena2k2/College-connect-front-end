@@ -14,7 +14,7 @@ import { useCookies } from 'react-cookie';
 
 
 function viewProfile() {
-    console.log('Clicked View profile')
+    window.location.href = '/profile'
 }
 
 function editProfile() {
