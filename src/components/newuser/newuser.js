@@ -30,10 +30,10 @@ function UserType(props) {
         aria-label='user-type'
         name='user-name-group'
         onChange={handleRadioChange} >
-            <FormControlLabel value='student' control={<Radio />} label='Student' />
-            <FormControlLabel value='student-incharge' control={<Radio />} label='Student In-charge' />
-            <FormControlLabel value='higher-authority' control={<Radio />} label='Higher Authority' />
-            <FormControlLabel value='admin' control={<Radio />} label='Admin' />
+            <FormControlLabel value='Student' control={<Radio />} label='Student' />
+            <FormControlLabel value='Student In-charge' control={<Radio />} label='Student In-charge' />
+            <FormControlLabel value='Higher Authority' control={<Radio />} label='Higher Authority' />
+            <FormControlLabel value='Admin' control={<Radio />} label='Admin' />
         </RadioGroup>
     );
 }
