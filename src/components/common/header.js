@@ -10,6 +10,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import GroupsIcon from '@mui/icons-material/Groups';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { useCookies } from 'react-cookie';
 
 
 function viewProfile() {
@@ -28,12 +29,14 @@ function searchUsers() {
     console.log('Clicked Search users')
 }
 
-function onLogout() {
-    console.log('Clicked Logout')
+function onLogout(setCookie) {
+    setCookie('isLoggedin', false, {path: '/'})
+    window.location.href = '/login'
 }
 
 
 function Options(props) {
+    const [ , setCookie] = useCookies(['isLoggedin'])
     return (
         <Menu
         anchorEl={props.anchorEl}
@@ -68,7 +71,7 @@ function Options(props) {
                 Search users
             </MenuItem>
             <Divider />
-            <MenuItem onClick={onLogout}>
+            <MenuItem onClick={() => onLogout(setCookie)}>
                 <ListItemIcon>
                     <LogoutIcon />
                 </ListItemIcon>

@@ -43,8 +43,6 @@ function App() {
     setCookie('isLoggedin', false, {path: '/'})
   }
 
-  console.log("Cookie value ", cookies.isLoggedin)
-
   const isLoggedin = findIsLoggedin(cookies)
   
   return (

@@ -124,7 +124,7 @@ class LoginPage extends React.Component {
 }
 
 function Login() {
-    const [cookies, setCookie] = useCookies(['isLoggedin', 'uid']);
+    const [ , setCookie] = useCookies(['isLoggedin', 'uid']);
     let history = useHistory()
     let location = useLocation()
     let { from } = location.state || { from: { pathname: "/" } };
