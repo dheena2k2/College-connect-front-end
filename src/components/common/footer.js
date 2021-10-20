@@ -7,11 +7,15 @@ class Options extends React.Component {
         super(props)
     }
 
+    goToHome() {
+        window.location.href = '/'
+    }
+
     render() {
         return (
             <div className='options-container'>
                 <Button variant='text'>About us</Button>
-                <Button variant='text'>Home</Button>
+                <Button variant='text' onClick={() => this.goToHome()}>Home</Button>
             </div>
         );
     }
