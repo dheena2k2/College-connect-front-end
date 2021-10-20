@@ -15,7 +15,7 @@ function findIsLoggedin(cookies) {
 }
 
 
-function PrivateRoute({children, cookies, ...rest}) {
+function PrivateRoute({children, cookies, ...rest}) {  // can be accessed only if logged in
   const isLoggedin = findIsLoggedin(cookies)
 
   return (
@@ -36,6 +36,27 @@ function PrivateRoute({children, cookies, ...rest}) {
 }
 
 
+function LoggedOutRoute({children, cookies, ...rest}) {  // can be accessed only if logged out
+  const isLoggedout = !findIsLoggedin(cookies)
+
+  return (
+    <Route
+    {...rest}
+    render={ ({location}) =>
+      isLoggedout ? (
+        children
+      ) : (
+        <Redirect
+        to={{
+          pathname: '/',
+          state: {from: location}
+        }} />
+      )
+    } />
+  );
+}
+
+
 function App() {
   const [cookies, setCookie] = useCookies(['isLoggedin']);
 
@@ -48,13 +69,13 @@ function App() {
   return (
     <Router className="App">
       <Switch>
-        <Route path='/login'>
+        <LoggedOutRoute path='/login' cookies={cookies}>
           <Login />
-        </Route>
-        <Route path='/newuser'>
+        </LoggedOutRoute>
+        <LoggedOutRoute path='/newuser' cookies={cookies}>
           <Header loggedin={isLoggedin} />
           <NewUser />
-        </Route>
+        </LoggedOutRoute>
         <PrivateRoute path='/' cookies={cookies}>
           <Header loggedin={isLoggedin} />
         </PrivateRoute>
