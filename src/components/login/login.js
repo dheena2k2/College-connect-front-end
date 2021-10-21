@@ -39,6 +39,7 @@ class InputBox extends React.Component {
         this.entryChange = this.onEntryChange.bind(this)
         this.onLogin = this.onSubmit.bind(this)
         this.newUser = this.onNewUser.bind(this)
+        this.keyPress = this.onKeyPress.bind(this)
     }
 
     onEntryChange(event) {
@@ -47,6 +48,12 @@ class InputBox extends React.Component {
         }
         if(event.target.id === 'password') {
             this.setState({password: event.target.value})
+        }
+    }
+
+    onKeyPress(event) {
+        if(event.key === 'Enter') {
+            this.onSubmit()
         }
     }
 
@@ -74,12 +81,14 @@ class InputBox extends React.Component {
                 id='username'
                 label='Username'
                 onChange={this.entryChange}
+                onKeyDown={this.keyPress}
                 variant='outlined' />
                 
                 <TextField
                 id='password'
                 label='Password'
                 onChange={this.entryChange}
+                onKeyDown={this.keyPress}
                 type='password'
                 variant='outlined' />
 
