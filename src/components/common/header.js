@@ -23,7 +23,7 @@ function viewProfile() {
 }
 
 function editProfile() {
-    console.log('Clicked Edit profile')
+    window.location.href = '/editprofile'
 }
 
 function myGroups() {
