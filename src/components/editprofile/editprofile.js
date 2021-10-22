@@ -5,6 +5,9 @@ import DateAdapter from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import TextField from '@mui/material/TextField';
+import Badge from '@mui/material/Badge'
+import UploadIcon from '@mui/icons-material/Upload';
+import IconButton from '@mui/material/IconButton'
 
 
 const textFieldVariant='outlined'
@@ -71,14 +74,26 @@ function EntryBox(props) {
 
     return (
         <div className='editprofile-subcontainer'>
-            <Avatar
+            <Badge
+            overlap='circular'
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
             sx={{
-                width: '200px',
-                height: '200px',
-                marginRight: '20px'
+                marginRight: '30px'
             }}
-            src={props.profileUrl}
-            alt={props.name} />
+            badgeContent={
+                <IconButton>
+                <Avatar
+                children={<UploadIcon />}
+                alt='Upload' /></IconButton>
+            } >
+                <Avatar
+                sx={{
+                    width: '200px',
+                    height: '200px',
+                }}
+                src={props.profileUrl}
+                alt={props.name} />
+            </Badge>
             <div className='editprofile-entrylist'>
                 {
                     Object.keys(entry_label).map((key, i) => (
