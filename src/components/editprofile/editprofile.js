@@ -8,6 +8,7 @@ import TextField from '@mui/material/TextField';
 import Badge from '@mui/material/Badge'
 import UploadIcon from '@mui/icons-material/Upload';
 import IconButton from '@mui/material/IconButton'
+import Button from '@mui/material/Button';
 
 
 const textFieldVariant='outlined'
@@ -34,9 +35,14 @@ function getUserDetails() {
 }
 
 
+function onSaveChanges(details) {
+    console.log(details)
+}
+
+
 function UserDOB(props) {
     const max_date = props.maxDate
-    const [value, setValue] = React.useState(max_date)
+    const [value, setValue] = React.useState(props.value || max_date)
 
     const handleDateChange = (selected_date) => {
         props.onChange(selected_date)
@@ -68,9 +74,31 @@ function EntryBox(props) {
         branch: 'Branch',
         dob: 'Date of birth'}
 
-        const age_limit = 17  // years
-        let max_date = new Date()
-        max_date.setFullYear(max_date.getFullYear() - age_limit)
+    const age_limit = 17  // years
+    let max_date = new Date()
+    max_date.setFullYear(max_date.getFullYear() - age_limit)
+    
+    const [details, setDetails] = React.useState({
+        name: props.name,
+        rollNo: props.rollNo,
+        description: props.description,
+        email: props.email,
+        admissionYear: props.admissionYear,
+        branch: props.branch,
+        dob: props.dob})
+    
+    function setValue(newValue, changeKey) {
+        let dummy = {}
+        for(let key of Object.keys(details)) {
+            if(key === changeKey) {
+                dummy[key] = newValue
+            }
+            else {
+                dummy[key] = details[key]
+            }
+        }
+        setDetails(dummy)
+    }
 
     return (
         <div className='editprofile-subcontainer'>
@@ -100,6 +128,8 @@ function EntryBox(props) {
                         <div key={i}>
                             {!(key === 'description' || key === 'dob') &&
                             <TextField
+                            defaultValue={details[key]}
+                            onChange={(event) => setValue(event.target.value, key)}
                             variant={textFieldVariant}
                             label={entry_label[key]} />
                             }
@@ -109,18 +139,32 @@ function EntryBox(props) {
                             multiline
                             minRows={5}
                             fullWidth
+                            defaultValue={details[key]}
+                            onChange={(event) => setValue(event.target.value, key)}
                             variant={textFieldVariant}
                             label={entry_label[key]} />
                             }
 
                             {key === 'dob' &&
                             <UserDOB
+                            value={details[key]}
+                            onChange={(newValue) => setValue(newValue, key)}
                             maxDate={max_date}
                             label={entry_label[key]} />
                             }
                         </div>
                     ))
                 }
+                <Button
+                onClick={() => onSaveChanges(details)}
+                variant='contained'
+                sx={{
+                    width: '30%',
+                    marginTop: '30px',
+                    marginLeft: '70%'
+                }} >
+                    Save Changes
+                </Button>
             </div>
         </div>
     );
@@ -131,6 +175,11 @@ function EditProfile() {
     const details = getUserDetails()
     return (
         <div className='editprofile-container'>
+            <div>
+                <h1>
+                    Edit Profile
+                </h1>
+            </div>
             <EntryBox {...details} />
         </div>        
     );
