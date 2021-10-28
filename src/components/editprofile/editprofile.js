@@ -27,7 +27,7 @@ function getUserDetails() {
         admissionYear: '2019',
         branch: 'Computer Science',
         dob: new Date(1998, 4, 5, 0, 0, 0, 0),
-        profileUrl: 'https://ih1.redbubble.net/image.2299745242.1024/mo,small,flatlay,product_square,600x600.jpg',
+        profileUrl: 'https://i1.sndcdn.com/avatars-UidYWfW20bjki8Ub-GJKpBQ-t500x500.jpg',
         description: description
     }
 
@@ -77,7 +77,7 @@ function EntryBox(props) {
     const age_limit = 17  // years
     let max_date = new Date()
     max_date.setFullYear(max_date.getFullYear() - age_limit)
-    
+
     const [details, setDetails] = React.useState({
         name: props.name,
         rollNo: props.rollNo,
@@ -86,7 +86,7 @@ function EntryBox(props) {
         admissionYear: props.admissionYear,
         branch: props.branch,
         dob: props.dob})
-    
+
     function setValue(newValue, changeKey) {
         let dummy = {}
         for(let key of Object.keys(details)) {
@@ -181,7 +181,7 @@ function EditProfile() {
                 </h1>
             </div>
             <EntryBox {...details} />
-        </div>        
+        </div>
     );
 }
 
