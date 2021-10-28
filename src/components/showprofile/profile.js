@@ -29,10 +29,10 @@ function getDateString(d) {
 
 
 function getUserDetails() {
-    const description = 'My name is Monkey D Luffy and I am a Pirate. I became a rubber \
+    const description = '' /*'My name is Monkey D Luffy and I am a Pirate. I became a rubber \
     man by eating Gum-Gum devil fruit. This makes me a devil fruit user whose body is \
     entirely made of rubber. My hobbie is eating. I will find One Piece treasure and \
-    will become "The King of The Pirates".'
+    will become "The King of The Pirates".'*/
     const details = {
         name: 'Monkey D. Luffy',
         rollNo: 'CSE32412',
@@ -41,7 +41,7 @@ function getUserDetails() {
         admissionYear: '2019',
         branch: 'Computer Science',
         dob: new Date(1998, 4, 5, 0, 0, 0, 0),
-        profileUrl: 'https://ih1.redbubble.net/image.2299745242.1024/mo,small,flatlay,product_square,600x600.jpg',
+        profileUrl: 'https://i1.sndcdn.com/avatars-UidYWfW20bjki8Ub-GJKpBQ-t500x500.jpg',
         description: description
     }
 
@@ -50,7 +50,10 @@ function getUserDetails() {
 
 
 function PrimaryInfo(props) {
-    console.log(props)
+    var description = props.description
+    if(props.isCurrentUser && description === '') {
+        description = '(Enter your profile description in the edit profile option, this message is not visible to other users)'
+    }
     return (
         <div className='profile-primaryinfo-container'>
             <div>
@@ -116,7 +119,7 @@ function PrimaryInfo(props) {
                     paddingTop: '20px',
                     paddingBottom: '20px'
                 }} >
-                    {props.description}
+                    {description}
                 </Typography>
                 <Divider flexItem={true} />
                 <Typography
@@ -148,7 +151,7 @@ function PrimaryInfo(props) {
 }
 
 
-function Profile() {
+function Profile(props) {
     const details = getUserDetails()
     console.log('in profile')
     return (
@@ -157,7 +160,7 @@ function Profile() {
                 User Profile
             </h1>
             <div className='profile-subcontainer'>
-                <PrimaryInfo {...details} />
+                <PrimaryInfo isCurrentUser={props.isCurrentUser} {...details} />
             </div>
         </div>
     );

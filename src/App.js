@@ -80,7 +80,7 @@ function App() {
         </LoggedOutRoute>
         <PrivateRoute path='/profile' cookies={cookies}>
           <Header loggedin={isLoggedin} />
-          <Profile />
+          <Profile isCurrentUser={true} />
         </PrivateRoute>
         <PrivateRoute path='/editprofile' cookies={cookies}>
           <Header loggedin={isLoggedin} />
