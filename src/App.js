@@ -5,9 +5,10 @@ import { Redirect } from 'react-router-dom';
 import Header from './components/common/header';
 import Footer from './components/common/footer';
 import Login from './components/login/login';
+import Home from './components/home/home';
 import NewUser from './components/newuser/newuser';
-import Profile from './components/showprofile/profile'
-import EditProfile from './components/editprofile/editprofile'
+import Profile from './components/showprofile/profile';
+import EditProfile from './components/editprofile/editprofile';
 import { useCookies } from 'react-cookie';
 import './App.css';
 
@@ -88,6 +89,7 @@ function App() {
         </PrivateRoute>
         <PrivateRoute path='/' cookies={cookies}>
           <Header loggedin={isLoggedin} />
+          <Home />
         </PrivateRoute>
       </Switch>
       <Footer />
