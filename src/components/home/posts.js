@@ -8,6 +8,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Divider from '@mui/material/Divider';
 import ReactPlayer from 'react-player';
 import ReactAudioPlayer from 'react-audio-player';
+import Button from '@mui/material/Button';
+import React from 'react';
 
 
 function stringifyList(content_list) {
@@ -64,7 +66,7 @@ function PostContainer(props) {
             sx={{
                 marginTop: '10px'
             }} />
-            <div>
+            <div className='post-children'>
                 {props.children}
             </div>
             <Accordion
@@ -90,6 +92,32 @@ function PostContainer(props) {
                     </Typography>
                 </AccordionDetails>
             </Accordion>
+        </div>
+    );
+}
+
+
+function PollOptions({options, status}) {
+    const [chosenOpt, setChosenOpt] = React.useState(null)
+    return (
+        <div className='poll-options'>
+            {Object.keys(options).map((key, i) => (
+                <div key={i}>
+                    {status === 'active' &&
+                    <Button
+                    disabled={(i.toString() !== chosenOpt && chosenOpt !== null)}
+                    onClick={(event) => setChosenOpt(event.target.id)}
+                    fullWidth
+                    sx={{
+                        marginTop: '30px',
+                        marginBotton: '30px'
+                    }}
+                    id={i.toString()}
+                    variant='contained'>
+                        {key}
+                    </Button>}
+                </div>
+            ))}
         </div>
     );
 }
@@ -126,6 +154,9 @@ export function Post(props) {
             }}>
                 {props.description}
             </Typography>
+
+            {props.type === 'poll'&&
+            <PollOptions options={props.options} status={props.pollStatus} />}
             </div>
         </PostContainer>
     );

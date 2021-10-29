@@ -1,5 +1,11 @@
 import './home.css'
-import {imagePostDetails, audioPostDetails, videoPostDetails, youtubePostDetails} from './stub'
+import {
+    imagePostDetails,
+    audioPostDetails,
+    videoPostDetails,
+    youtubePostDetails,
+    pollPostDetails
+} from './stub'
 import { Post } from './posts'
 
 
@@ -10,6 +16,7 @@ function Home() {
             <Post {...audioPostDetails()} />
             <Post {...videoPostDetails()} />
             <Post {...youtubePostDetails()} />
+            <Post {...pollPostDetails()} />
         </div>
     );
 }

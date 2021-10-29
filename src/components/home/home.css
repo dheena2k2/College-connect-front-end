@@ -21,14 +21,17 @@
     width: 100%;
 }
 
+.post-children {
+    width: 90%;
+}
+
 .post-innercontainer {
     display: flex;
     flex-direction: column;
     align-items: center;
 
     margin-top: 20px;
-    margin-left: 2.5%;
-    margin-right: 2.5%;
+    width: 100%;
 }
 
 .user-space {
@@ -43,4 +46,8 @@
     flex-direction: column;
     align-items: center;
     min-height: 81vh;
+}
+
+.poll-options {
+    width: 60%
 }
