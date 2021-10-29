@@ -12,6 +12,14 @@ import Button from '@mui/material/Button';
 import React from 'react';
 
 
+function chooseOption(event, postId, value, setter) {
+    if(value === null) {
+        setter(event.target.id)
+        console.log(postId + ',' + event.target.name)
+    }
+}
+
+
 function stringifyList(content_list) {
     let content = content_list[0]
     for(var i=1; i<content_list.length; i+=1) {
@@ -97,7 +105,7 @@ function PostContainer(props) {
 }
 
 
-function PollOptions({options, status}) {
+function PollOptions({postId, options, status}) {
     const [chosenOpt, setChosenOpt] = React.useState(null)
     return (
         <div className='poll-options'>
@@ -106,13 +114,14 @@ function PollOptions({options, status}) {
                     {status === 'active' &&
                     <Button
                     disabled={(i.toString() !== chosenOpt && chosenOpt !== null)}
-                    onClick={(event) => setChosenOpt(event.target.id)}
+                    onClick={(event) => chooseOption(event, postId, chosenOpt, setChosenOpt)}
                     fullWidth
                     sx={{
                         marginTop: '30px',
                         marginBotton: '30px'
                     }}
                     id={i.toString()}
+                    name={key}
                     variant='contained'>
                         {key}
                     </Button>}
@@ -156,7 +165,10 @@ export function Post(props) {
             </Typography>
 
             {props.type === 'poll'&&
-            <PollOptions options={props.options} status={props.pollStatus} />}
+            <PollOptions
+            postId={props.ID}
+            options={props.options}
+            status={props.pollStatus} />}
             </div>
         </PostContainer>
     );
