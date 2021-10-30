@@ -73,29 +73,36 @@ function App() {
   return (
     <Router className="App">
       <Switch>
+
         <LoggedOutRoute path='/login' cookies={cookies}>
           <Login />
         </LoggedOutRoute>
+
         <LoggedOutRoute path='/newuser' cookies={cookies}>
           <Header loggedin={isLoggedin} />
           <NewUser />
         </LoggedOutRoute>
+
         <PrivateRoute path='/profile' cookies={cookies}>
           <Header loggedin={isLoggedin} />
           <Profile isCurrentUser={true} />
         </PrivateRoute>
+
         <PrivateRoute path='/editprofile' cookies={cookies}>
           <Header loggedin={isLoggedin} />
           <EditProfile />
         </PrivateRoute>
+
         <PrivateRoute path='/createpost' cookies={cookies}>
           <Header loggedin={isLoggedin} />
           <CreatePost />
         </PrivateRoute>
+
         <PrivateRoute path='/' cookies={cookies}>
           <Header loggedin={isLoggedin} />
           <Home />
         </PrivateRoute>
+        
       </Switch>
       <Footer />
     </Router>
