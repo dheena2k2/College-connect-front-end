@@ -1,4 +1,4 @@
-import './home.css'
+import './home.css';
 import {
     imagePostDetails,
     audioPostDetails,
@@ -7,12 +7,21 @@ import {
     newPollPostDetails,
     selectedPollPostDetails,
     publishedPollPostDetails
-} from './stub'
-import { Post } from './posts'
+} from './stub';
+import { Post } from './posts';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
+
+
+function postableUser() {
+    return true;
+}
 
 
 function Home() {
+    const isPostableUser = postableUser()
     return (
+        <>
         <div className='home-container'>
             <Post {...imagePostDetails()} />
             <Post {...audioPostDetails()} />
@@ -22,6 +31,19 @@ function Home() {
             <Post {...selectedPollPostDetails()} />
             <Post {...publishedPollPostDetails()} />
         </div>
+        {isPostableUser &&
+        <Fab
+        sx={{
+            position: 'fixed',
+            right: '20px',
+            bottom: '20px'
+        }}
+        color='primary'
+        variant='extended'>
+            Create Post
+            <AddIcon />
+        </Fab>}
+        </>
     );
 }
 
