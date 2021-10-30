@@ -4,7 +4,9 @@ import {
     audioPostDetails,
     videoPostDetails,
     youtubePostDetails,
-    pollPostDetails
+    newPollPostDetails,
+    selectedPollPostDetails,
+    publishedPollPostDetails
 } from './stub'
 import { Post } from './posts'
 
@@ -16,7 +18,9 @@ function Home() {
             <Post {...audioPostDetails()} />
             <Post {...videoPostDetails()} />
             <Post {...youtubePostDetails()} />
-            <Post {...pollPostDetails()} />
+            <Post {...newPollPostDetails()} />
+            <Post {...selectedPollPostDetails()} />
+            <Post {...publishedPollPostDetails()} />
         </div>
     );
 }

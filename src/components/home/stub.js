@@ -50,7 +50,7 @@ export function youtubePostDetails() {
     });
 }
 
-export function pollPostDetails() {
+export function newPollPostDetails() {
     return ({
         ID: 'JXF23D4',
         ownerID: 'luffy55',
@@ -63,6 +63,44 @@ export function pollPostDetails() {
             Bar: 0,
             Dore: 0,
             Yon: 0
+        },
+        description: 'Choose the option which you think is more related to music. This is test sentence.. This is test sentence.. This is test sentence.. This is test sentence.. This is test sentence.. This is test sentence.',
+        groups: ['hydraulics', 'manipulator', 'batch19', 'batch18', 'test-1', 'test-2', 'test-3', 'test-4', 'test-5', 'test-6', 'test-7', 'test-8']
+    });
+}
+
+export function selectedPollPostDetails() {
+    return ({
+        ID: 'JXF23D4',
+        ownerID: 'luffy55',
+        ownerProfileUrl: 'https://i1.sndcdn.com/avatars-UidYWfW20bjki8Ub-GJKpBQ-t500x500.jpg',
+        createdTime: new Date(),
+        type: 'poll',
+        pollStatus: 'active',
+        options: {
+            Foo: 0,
+            Bar: 0,
+            Dore: 1,
+            Yon: 0
+        },
+        description: 'Choose the option which you think is more related to music. This is test sentence.. This is test sentence.. This is test sentence.. This is test sentence.. This is test sentence.. This is test sentence.',
+        groups: ['hydraulics', 'manipulator', 'batch19', 'batch18', 'test-1', 'test-2', 'test-3', 'test-4', 'test-5', 'test-6', 'test-7', 'test-8']
+    });
+}
+
+export function publishedPollPostDetails() {
+    return ({
+        ID: 'JXF23D4',
+        ownerID: 'luffy55',
+        ownerProfileUrl: 'https://i1.sndcdn.com/avatars-UidYWfW20bjki8Ub-GJKpBQ-t500x500.jpg',
+        createdTime: new Date(),
+        type: 'poll',
+        pollStatus: 'published',
+        options: {
+            Foo: 13,
+            Bar: 8,
+            Dore: 80,
+            Yon: 15
         },
         description: 'Choose the option which you think is more related to music. This is test sentence.. This is test sentence.. This is test sentence.. This is test sentence.. This is test sentence.. This is test sentence.',
         groups: ['hydraulics', 'manipulator', 'batch19', 'batch18', 'test-1', 'test-2', 'test-3', 'test-4', 'test-5', 'test-6', 'test-7', 'test-8']

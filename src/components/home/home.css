@@ -49,5 +49,16 @@
 }
 
 .poll-options {
-    width: 60%
+    width: 60%;
+}
+
+.poll-options > div {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.poll-result {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }

@@ -10,6 +10,8 @@ import ReactPlayer from 'react-player';
 import ReactAudioPlayer from 'react-audio-player';
 import Button from '@mui/material/Button';
 import React from 'react';
+import Chip from '@mui/material/Chip';
+import Tooltip from '@mui/material/Tooltip';
 
 
 function chooseOption(event, postId, value, setter) {
@@ -106,7 +108,35 @@ function PostContainer(props) {
 
 
 function PollOptions({postId, options, status}) {
-    const [chosenOpt, setChosenOpt] = React.useState(null)
+    var chosenOption = null
+    if(status === 'active') {
+        let i = 0
+        for(let key of Object.keys(options)) {
+            if(options[key] > 0) {
+                chosenOption = i.toString()
+                console.log(key, ':', i)
+                break
+            }
+            i += 1
+        }
+    }
+
+    var optWithPer = {}
+    if(status === 'published') {
+        let total_votes = 0
+        for(let key of Object.keys(options)) {
+            total_votes += options[key]
+        }
+        for(let key of Object.keys(options)) {
+            let percentage = 0
+            percentage = (options[key]/total_votes) * 100
+            percentage = total_votes === 0 ? 0 : Math.round(percentage)
+            optWithPer[key] = percentage
+        }
+    }
+
+
+    const [chosenOpt, setChosenOpt] = React.useState(chosenOption)
     return (
         <div className='poll-options'>
             {Object.keys(options).map((key, i) => (
@@ -116,15 +146,29 @@ function PollOptions({postId, options, status}) {
                     disabled={(i.toString() !== chosenOpt && chosenOpt !== null)}
                     onClick={(event) => chooseOption(event, postId, chosenOpt, setChosenOpt)}
                     fullWidth
-                    sx={{
-                        marginTop: '30px',
-                        marginBotton: '30px'
-                    }}
                     id={i.toString()}
                     name={key}
                     variant='contained'>
                         {key}
                     </Button>}
+
+                    {status === 'published' &&
+                    <div className='poll-result'>
+                    <Tooltip
+                    title={options[key] + ' votes'}
+                    placement='left'>
+                        <Chip
+                        label={(optWithPer[key] + '%')}
+                        variant='outlined' />
+                    </Tooltip>
+                    <Typography sx={{
+                        fontFamily: 'arvo',
+                        marginLeft: '10px'
+                    }}>
+                        {key}
+                    </Typography>
+                    </div>
+                    }
                 </div>
             ))}
         </div>
