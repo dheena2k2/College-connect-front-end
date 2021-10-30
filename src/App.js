@@ -9,6 +9,7 @@ import Home from './components/home/home';
 import NewUser from './components/newuser/newuser';
 import Profile from './components/showprofile/profile';
 import EditProfile from './components/editprofile/editprofile';
+import CreatePost from './components/createpost/createpost'
 import { useCookies } from 'react-cookie';
 import './App.css';
 
@@ -86,6 +87,10 @@ function App() {
         <PrivateRoute path='/editprofile' cookies={cookies}>
           <Header loggedin={isLoggedin} />
           <EditProfile />
+        </PrivateRoute>
+        <PrivateRoute path='/createpost' cookies={cookies}>
+          <Header loggedin={isLoggedin} />
+          <CreatePost />
         </PrivateRoute>
         <PrivateRoute path='/' cookies={cookies}>
           <Header loggedin={isLoggedin} />
