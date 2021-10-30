@@ -18,6 +18,11 @@ function postableUser() {
 }
 
 
+function onCreatePostClick() {
+    window.location.href = '/createpost'
+}
+
+
 function Home() {
     const isPostableUser = postableUser()
     return (
@@ -33,6 +38,7 @@ function Home() {
         </div>
         {isPostableUser &&
         <Fab
+        onClick={onCreatePostClick}
         sx={{
             position: 'fixed',
             right: '20px',
