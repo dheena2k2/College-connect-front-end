@@ -264,7 +264,7 @@ function SelectGroupDialog(props) {
             }}
             onClick={onClose}
             variant='contained' >
-                Done
+                Close
             </Button>
             </div>
         </Dialog>);
@@ -272,7 +272,9 @@ function SelectGroupDialog(props) {
 
 
 function CreatePostEntry() {
+    const [description, setDescription] = React.useState('')
     const [postType, setPostType] = React.useState('multimedia')
+    const [finalPostType, setFinalPostType] = React.useState('plain')
     const [optionNos, setOptionNos] = React.useState(0)
     const [pollOptions, setPollOptions] = React.useState([''])
     const [focusNew, setFocusNew] = React.useState(false)
@@ -357,6 +359,16 @@ function CreatePostEntry() {
         )
     }
 
+    const setRadioOption = (event) => {
+        setPostType(event.target.value)
+        if(event.target.value === 'poll') {
+            setFinalPostType('poll')
+        }
+        else {
+            setFinalPostType('plain')
+        }
+    }
+
     const deleteGroup = (delIndex) => {
         let temp = [...groups]
         temp.splice(delIndex, 1)
@@ -377,6 +389,11 @@ function CreatePostEntry() {
             fullWidth
             multiline
             minRows={5}
+            sx={{
+                marginTop: '20px'
+            }}
+            value={description}
+            onChange={(event) => setDescription(event.target.value)}
             label='Description'
             variant='outlined' />
             <div className='createpost-posttype'>
@@ -391,7 +408,7 @@ function CreatePostEntry() {
                     <RadioGroup
                     row
                     defaultValue='multimedia'
-                    onChange={(event) => setPostType(event.target.value)}>
+                    onChange={setRadioOption}>
 
                         <FormControlLabel
                         value='multimedia'
@@ -510,6 +527,12 @@ function CreatePostEntry() {
                     onClose={onGroupSelClose} />
                 </div>
             </div>
+            <center>
+                <Button
+                variant='contained'>
+                    Post
+                </Button>
+            </center>
         </div>
     );
 }
@@ -518,6 +541,11 @@ function CreatePostEntry() {
 function CreatePost() {
     return (
         <div className='createpost-container'>
+            <div className='createpost-title'>
+                <h1>
+                    Create new post
+                </h1>
+            </div>
             <CreatePostEntry />
         </div>
     );
