@@ -10,7 +10,7 @@ import UploadIcon from '@mui/icons-material/Upload';
 import Dialog from '@mui/material/Dialog';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
-import { TabContext, TabList, TabPanel } from '@mui/lab';
+import { TabContext, TabList } from '@mui/lab';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import ReactPlayer from 'react-player';
 import ReactAudioPlayer from 'react-audio-player';
@@ -19,7 +19,33 @@ import AudiotrackIcon from '@mui/icons-material/Audiotrack';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
-import { grey } from '@mui/material/colors'
+import { grey } from '@mui/material/colors';
+import Chip from '@mui/material/Chip';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import DialogTitle from '@mui/material/DialogTitle';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+
+
+function getGroups() {
+    const groups = [
+        'College',
+        'Batch 19',
+        'Computer Science',
+        'Coding club',
+        'C',
+        'C++',
+        'JAVA',
+        'Python',
+        'Java Script',
+        'React JS',
+        'Material-UI',
+        'Web Development',
+        'Competition',
+        'Cultural club',
+        'Dhruva'
+    ]
+    return groups;
+}
 
 
 function FilePreview({type, finalUrl}) {
@@ -155,12 +181,104 @@ function UploadDialog(props) {
 }
 
 
+function SelectGroupDialog(props) {
+    const {open, onClose} = props
+    const selectedGroups = props.parentList
+    const setSelectedGroups = props.setParentList
+    const userGroups = getGroups()
+
+    const selectGroup = (group) => {
+        const selGroup = group
+        console.log(selGroup)
+        let temp = [...selectedGroups]
+        temp.push(selGroup)
+        setSelectedGroups(temp)
+    }
+
+    const removeGroup = (group) => {
+        const remGroup = group
+        let temp = [...selectedGroups]
+        const remIndex = temp.indexOf(remGroup)
+        temp.splice(remIndex, 1)
+        setSelectedGroups(temp)
+    }
+
+    return (
+        <Dialog
+        fullWidth
+        maxWidth='sm'
+        onClose={onClose}
+        open={open} >
+            <DialogTitle>
+                Select groups to add
+            </DialogTitle>
+            <div className='createpost-selectgroups'>
+            <Box
+            sx={{
+                border: '2px dashed grey',
+                borderRadius: '5px',
+                width: '95%',
+                display: 'flex',
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                alignContent: 'flex-start',
+                height: '300px',
+                overflow: 'scroll'
+            }}>
+                {
+                    userGroups.map((group, i) => (
+                        <div key={i}>
+
+                            {selectedGroups.includes(group) &&
+                            <Chip
+                            id={group}
+                            sx={{
+                                marginLeft: '1px',
+                                marginRight: '1px',
+                                marginTop: '5px',
+                                marginBottom: '5px'
+                            }}
+                            color='success'
+                            onDelete={() => removeGroup(group)}
+                            label={group} />}
+
+                            {!selectedGroups.includes(group) &&
+                            <Chip
+                            id={group}
+                            sx={{
+                                marginLeft: '1px',
+                                marginRight: '1px',
+                                marginTop: '5px',
+                                marginBottom: '5px'
+                            }}
+                            onClick={() => selectGroup(group)}
+                            label={group} />}
+
+                        </div>
+                    ))
+                }
+            </Box>
+            <Button
+            sx={{
+                marginBottom: '10px'
+            }}
+            onClick={onClose}
+            variant='contained' >
+                Done
+            </Button>
+            </div>
+        </Dialog>);
+}
+
+
 function CreatePostEntry() {
     const [postType, setPostType] = React.useState('multimedia')
     const [optionNos, setOptionNos] = React.useState(0)
     const [pollOptions, setPollOptions] = React.useState([''])
     const [focusNew, setFocusNew] = React.useState(false)
     const [dialogOpen, setDialogOpen] = React.useState(false)
+    const [groups, setGroups] = React.useState([])
+    const [selectGroupOpen, setSelectGroupOpen] = React.useState(false)
 
     const openDialog = () => {
         setDialogOpen(true)
@@ -168,6 +286,7 @@ function CreatePostEntry() {
 
     const onDialogClose = () => {
         setDialogOpen(false)
+        setGroups(groups)
     }
 
     const entryChange = (event, byEnterPress) => {
@@ -238,6 +357,20 @@ function CreatePostEntry() {
         )
     }
 
+    const deleteGroup = (delIndex) => {
+        let temp = [...groups]
+        temp.splice(delIndex, 1)
+        setGroups(temp)
+    }
+
+    const onGroupSelClose = () => {
+        setSelectGroupOpen(false)
+    }
+
+    const onAddGroup = () => {
+        setSelectGroupOpen(true)
+    }
+
     return (
         <div className='createpost-innercontainer'>
             <TextField
@@ -301,7 +434,6 @@ function CreatePostEntry() {
                 <Button
                 sx={{
                     marginTop: '10px',
-                    marginBottom: '10px'
                 }}
                 onClick={openDialog}
                 variant='outlined'
@@ -331,6 +463,52 @@ function CreatePostEntry() {
                 }
                 </>}
 
+            </div>
+            <div>
+                <Typography
+                sx={{
+                    fontFamily: 'arvo',
+                    fontWeight: 'bold'
+                }}>
+                    Groups:
+                </Typography>
+                <div className='createpost-groups'>
+                    {
+                        groups.map((groupName, i) => (
+                            <div key={i}>
+                                <Chip
+                                sx={{
+                                    marginLeft: '1px',
+                                    marginRight: '1px',
+                                    marginTop: '5px',
+                                    marginBottom: '5px'
+                                }}
+                                id={i.toString()}
+                                label={groupName}
+                                onDelete={(event) => deleteGroup(i)}
+                                variant='outlined' />
+                            </div>
+                        ))
+                    }
+                    <Chip
+                    icon={<AddCircleIcon />}
+                    sx={{
+                        marginLeft: '1px',
+                        marginRight: '1px',
+                        marginTop: '5px',
+                        marginBottom: '5px'
+                    }}
+                    onClick={onAddGroup}
+                    variant='outlined'
+                    color='primary'
+                    label='Add groups' />
+
+                    <SelectGroupDialog
+                    open={selectGroupOpen}
+                    parentList={groups}
+                    setParentList={setGroups}
+                    onClose={onGroupSelClose} />
+                </div>
             </div>
         </div>
     );

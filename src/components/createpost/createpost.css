@@ -58,3 +58,20 @@
 
     height: 80%;
 }
+
+.createpost-groups {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.createpost-selectgroups {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.createpost-selectgroups > * {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
