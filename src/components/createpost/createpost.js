@@ -23,7 +23,7 @@ import { grey } from '@mui/material/colors';
 import Chip from '@mui/material/Chip';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DialogTitle from '@mui/material/DialogTitle';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import { useFilePicker } from 'use-file-picker';
 
 
 function getGroups() {
@@ -97,16 +97,35 @@ function UploadDialog(props) {
     const [postType, setPostType] = React.useState('image')
     const [finalUrl, setFinalUrl] = React.useState('')
     const [tempUrl, setTempUrl] = React.useState('')
+    const [allowMultiple, setAllowMultiple] = React.useState(false)
+    const fileType = postType !== 'file' ? postType+'/*' : '*'
+    const [openFileSelector, { filesContent, loading, errors }] = useFilePicker({
+        multiple: allowMultiple,
+        accept: fileType
+    })
 
     const entryChange = (event) => {
         setFinalUrl(event.target.value)
     }
 
     const typeChange = (event, newVal) => {
+        setAllowMultiple(false)
+        if(newVal === 'files') {
+            setAllowMultiple(true)
+        }
         setFinalUrl('')
         setTempUrl('')
         setPostType(newVal)
     }
+
+    const selectFiles = () => {
+        openFileSelector()
+    }
+
+    React.useEffect(() => {
+        console.log('Uploaded file', filesContent)
+    }, [filesContent])
+
 
     return (
         <Dialog
@@ -162,6 +181,7 @@ function UploadDialog(props) {
 
                         {postType !== 'youtube' &&
                         <Button
+                        onClick={selectFiles}
                         variant='contained'
                         endIcon={<UploadIcon />}>
                             Upload
