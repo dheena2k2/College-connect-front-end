@@ -11,6 +11,7 @@ import Profile from './components/showprofile/profile';
 import EditProfile from './components/editprofile/editprofile';
 import CreatePost from './components/createpost/createpost'
 import { useCookies } from 'react-cookie';
+import UserTable from "./components/users/usertable";
 import './App.css';
 
 
@@ -87,7 +88,10 @@ function App() {
           <Header loggedin={isLoggedin} />
           <Profile isCurrentUser={true} />
         </PrivateRoute>
-
+        <PrivateRoute path='/users' cookies={cookies}>
+          <Header loggedin={isLoggedin} />
+          <UserTable isCurrentUser={true} />
+        </PrivateRoute>
         <PrivateRoute path='/editprofile' cookies={cookies}>
           <Header loggedin={isLoggedin} />
           <EditProfile />
