@@ -14,6 +14,8 @@ import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import { useSelector, useDispatch } from 'react-redux'
 import { addpost, setposts } from '../../app/postSlice';
+import { Link } from "react-router-dom";
+
 
 function postableUser() {
     return true;
@@ -57,7 +59,8 @@ function Home() {
         </div>
         {isPostableUser &&
         <Fab
-        onClick={onCreatePostClick}
+        LinkComponent={Link}
+        to="/createpost"
         sx={{
             position: 'fixed',
             right: '20px',
