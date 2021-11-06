@@ -16,8 +16,8 @@ class Options extends React.Component {
     render() {
         return (
             <div className='options-container'>
-                <Button variant='text'>About us</Button>
-                <Link to="/">Home</Link>
+                <Button  component={Link} to="aboutus" variant='text'>About us</Button>
+                <Button component={Link} to="/" variant='text'>Home</Button>
             </div>
         );
     }
