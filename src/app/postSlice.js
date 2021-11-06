@@ -6,6 +6,9 @@ export const postSlice = createSlice({
     posts:[],
   },
   reducers: {
+    setposts:(state,action)=>{
+        state.posts = action.payload;
+    },
     addpost: (state, action) => {
         state.posts.push(action.payload);
     },
@@ -36,6 +39,6 @@ export const postSlice = createSlice({
   },
 })
 
-export const {addpost,deletepost,updatepost} = postSlice.actions
+export const {addpost,deletepost,updatepost,setposts} = postSlice.actions
 
 export default postSlice.reducer
