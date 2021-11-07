@@ -138,7 +138,7 @@ export default function StickyHeadTable(props) {
   };
 
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+    <Paper sx={{ width: '100%', overflow: 'hidden',fontFamily:"arvo" }}>
       <Grid container alignItems="center" justifyContent="center" style={{padding:"20px"}}>
           <Grid container item alignItems="center" justifyContent="center">
               <TextField
