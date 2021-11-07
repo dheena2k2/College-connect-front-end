@@ -11,6 +11,7 @@ import Profile from './components/showprofile/profile';
 import EditProfile from './components/editprofile/editprofile';
 import CreatePost from './components/createpost/createpost';
 import Group from './components/group/group';
+import MyGroups from './components/group/mygroups';
 import { useCookies } from 'react-cookie';
 import UserTable from "./components/users/usertable";
 import './App.css';
@@ -94,7 +95,7 @@ function App() {
           <Header loggedin={isLoggedin} />
           <UserTable isCurrentUser={true} />
         </PrivateRoute>
-        
+
         <PrivateRoute path='/editprofile' cookies={cookies}>
           <Header loggedin={isLoggedin} />
           <EditProfile />
@@ -108,6 +109,11 @@ function App() {
         <PrivateRoute path='/group' cookies={cookies}>
           <Header loggedin={isLoggedin} />
           <Group />
+        </PrivateRoute>
+
+        <PrivateRoute path='/mygroups' cookies={cookies}>
+          <Header loggedin={isLoggedin} />
+          <MyGroups />
         </PrivateRoute>
 
         <PrivateRoute path='/' cookies={cookies}>
