@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { useHistory } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 
 
@@ -38,7 +39,6 @@ class InputBox extends React.Component {
         this.state = {username: '', password: ''}
         this.entryChange = this.onEntryChange.bind(this)
         this.onLogin = this.onSubmit.bind(this)
-        this.newUser = this.onNewUser.bind(this)
         this.keyPress = this.onKeyPress.bind(this)
     }
 
@@ -65,11 +65,6 @@ class InputBox extends React.Component {
             this.props.setCookie('uid', uid, {path: '/'})
             this.props.onSuccessfulAuth()
         }
-    }
-
-    onNewUser() {
-        window.location.href = '/newuser'
-        console.log('New user request detected')
     }
 
     render() {
@@ -99,6 +94,8 @@ class InputBox extends React.Component {
                         Login
                     </Button>
                     <Button
+                    component={Link}
+                    to='newuser'
                     variant='text'
                     onClick={this.newUser}>
                         New user
