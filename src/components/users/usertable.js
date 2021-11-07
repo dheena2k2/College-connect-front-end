@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import {TextField,Button,Grid} from "@mui/material"
+import {TextField,Button,Grid,Avatar} from "@mui/material"
 import {Link} from "react-router-dom"
 const columns = [
   { id: 'username', label: 'Username', minWidth: 50 },
@@ -138,11 +138,12 @@ export default function StickyHeadTable(props) {
   };
 
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+    <Paper sx={{ width: '100%', overflow: 'hidden',fontFamily:"arvo" }}>
       <Grid container alignItems="center" justifyContent="center" style={{padding:"20px"}}>
           <Grid container item alignItems="center" justifyContent="center">
               <TextField
                 value={query}
+                placeholder={"Search user"}
                 onChange={(e)=>setQuery(e.target.value)}
               />
               <Button>Search</Button>
@@ -156,6 +157,7 @@ export default function StickyHeadTable(props) {
                 <TableCell
                   key={column.id}
                   align={column.align}
+                  style={{fontFamily:"arvo"}}
                 >
                   {column.label}
                 </TableCell>
@@ -167,11 +169,19 @@ export default function StickyHeadTable(props) {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code} component={Link} to={"/profile"}>
+                  <TableRow 
+                    hover 
+                    tabIndex={-1} 
+                    key={row.code} 
+                    component={Link} 
+                    to={"/profile"} 
+                    style={{textDecoration:"none"}}
+                  >
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={column.id} align={column.align}>
+                        <TableCell key={column.id} align={column.align} style={{fontFamily:"arvo"}}>
+                          {/*column.id=="username" && <Avatar src={}>{value[0]}</Avatar>*/}
                           {column.format && typeof value === 'number'
                             ? column.format(value)
                             : value}
