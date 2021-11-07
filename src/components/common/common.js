@@ -24,3 +24,4 @@ export function GroupPic({childern, src, alt, ...rest}) {
         );
     }
 }
+
