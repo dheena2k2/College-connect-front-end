@@ -143,6 +143,7 @@ export default function StickyHeadTable(props) {
           <Grid container item alignItems="center" justifyContent="center">
               <TextField
                 value={query}
+                placeholder={"Search user"}
                 onChange={(e)=>setQuery(e.target.value)}
               />
               <Button>Search</Button>
