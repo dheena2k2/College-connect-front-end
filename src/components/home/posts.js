@@ -12,6 +12,20 @@ import Button from '@mui/material/Button';
 import React from 'react';
 import Chip from '@mui/material/Chip';
 import Tooltip from '@mui/material/Tooltip';
+import Box from '@mui/material/Box';
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
+import { publishedPollPostDetails } from './stub';
+
+
+function deletePost(postId) {
+    var sure = window.confirm('Are you sure you want to delete this post')
+}
+
+
+function publishPollResults(postId) {
+    var sure = window.confirm('Confirm publish poll results')
+}
 
 
 function chooseOption(event, postId, value, setter) {
@@ -44,6 +58,7 @@ function dateToString(currentdate) {
 
 
 function PostContainer(props) {
+    const currentUser = true
     return (
         <div className='post-container'>
             <div className='post-container-head'>
@@ -62,13 +77,36 @@ function PostContainer(props) {
                     </Typography>
                 </div>
                 <div>
-                    <Typography sx={{
-                        fontSize: '10px',
-                        fontStyle: 'italic',
-                        color: grey[500]
-                    }} >
-                        {dateToString(props.createdTime)}
-                    </Typography>
+                    <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center'
+                    }}>
+                        {props.type === 'poll' &&
+                        props.pollStatus === 'active' &&
+                        currentUser &&
+                        <Button
+                        sx={{
+                            marginRight: '10px'
+                        }}
+                        onClick={() => publishPollResults(props.ID)}
+                        variant='text'>
+                            Publish result
+                        </Button>}
+                        <Typography sx={{
+                            fontSize: '10px',
+                            fontStyle: 'italic',
+                            color: grey[500]
+                        }} >
+                            {dateToString(props.createdTime)}
+                        </Typography>
+                        {currentUser &&
+                        <IconButton
+                        onClick={() => deletePost(props.ID)}>
+                            <DeleteIcon />
+                        </IconButton>}
+                    </Box>
                 </div>
             </div>
             <Divider
