@@ -2,6 +2,7 @@ import React from 'react';
 import './login.css';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 import { useHistory } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -101,6 +102,16 @@ class InputBox extends React.Component {
                         New user
                     </Button>
                 </div>
+
+                <Typography
+                component={Link}
+                to='/'
+                sx={{
+                    fontFamily: 'arvo',
+                    fontSize: '13px',
+                }}>
+                    forgot password
+                </Typography>
             </div>
         );
     }
