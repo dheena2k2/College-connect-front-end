@@ -89,10 +89,12 @@ function App() {
           <Header loggedin={isLoggedin} />
           <Profile isCurrentUser={true} />
         </PrivateRoute>
+
         <PrivateRoute path='/users' cookies={cookies}>
           <Header loggedin={isLoggedin} />
           <UserTable isCurrentUser={true} />
         </PrivateRoute>
+        
         <PrivateRoute path='/editprofile' cookies={cookies}>
           <Header loggedin={isLoggedin} />
           <EditProfile />
