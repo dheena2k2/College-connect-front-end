@@ -9,7 +9,8 @@ import Home from './components/home/home';
 import NewUser from './components/newuser/newuser';
 import Profile from './components/showprofile/profile';
 import EditProfile from './components/editprofile/editprofile';
-import CreatePost from './components/createpost/createpost'
+import CreatePost from './components/createpost/createpost';
+import Group from './components/group/group';
 import { useCookies } from 'react-cookie';
 import UserTable from "./components/users/usertable";
 import './App.css';
@@ -100,6 +101,11 @@ function App() {
         <PrivateRoute path='/createpost' cookies={cookies}>
           <Header loggedin={isLoggedin} />
           <CreatePost />
+        </PrivateRoute>
+
+        <PrivateRoute path='/group' cookies={cookies}>
+          <Header loggedin={isLoggedin} />
+          <Group />
         </PrivateRoute>
 
         <PrivateRoute path='/' cookies={cookies}>
