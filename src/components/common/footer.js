@@ -1,6 +1,8 @@
 import React from 'react';
 import './footer.css'
 import Button from '@mui/material/Button'
+import { Link } from "react-router-dom";
+
 
 class Options extends React.Component {
     constructor(props) {
@@ -14,8 +16,8 @@ class Options extends React.Component {
     render() {
         return (
             <div className='options-container'>
-                <Button variant='text'>About us</Button>
-                <Button variant='text' onClick={() => this.goToHome()}>Home</Button>
+                <Button  component={Link} to="aboutus" variant='text'>About us</Button>
+                <Button component={Link} to="/" variant='text'>Home</Button>
             </div>
         );
     }

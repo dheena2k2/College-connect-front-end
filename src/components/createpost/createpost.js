@@ -24,8 +24,8 @@ import Chip from '@mui/material/Chip';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useFilePicker } from 'use-file-picker';
-
-
+import {useSelector,useDispatch} from "react-redux"
+import {addpost} from "../../app/postSlice"
 function getGroups() {
     const groups = [
         'College',
@@ -301,7 +301,7 @@ function CreatePostEntry() {
     const [dialogOpen, setDialogOpen] = React.useState(false)
     const [groups, setGroups] = React.useState([])
     const [selectGroupOpen, setSelectGroupOpen] = React.useState(false)
-
+    const dispatch = useDispatch();
     const openDialog = () => {
         setDialogOpen(true)
     }
@@ -401,6 +401,20 @@ function CreatePostEntry() {
 
     const onAddGroup = () => {
         setSelectGroupOpen(true)
+    }
+    const addPost = () => {
+        console.log("adding post");
+        var newpost = {
+            ID: 'JXF23D4',
+            ownerID: 'luffy55',
+            ownerProfileUrl: 'https://i1.sndcdn.com/avatars-UidYWfW20bjki8Ub-GJKpBQ-t500x500.jpg',
+            createdTime: new Date(),
+            type: 'image',
+            file_links: ['https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'],
+            description: 'It is just a stunning lake. Take in the beauty, sit back, take a deep breath and relax',
+            groups: ['vacation', 'counciling', 'batch19', 'batch18']
+        }
+        dispatch(addpost(newpost));
     }
 
     return (
@@ -549,7 +563,9 @@ function CreatePostEntry() {
             </div>
             <center>
                 <Button
-                variant='contained'>
+                variant='contained'
+                onClick={addPost}
+                >
                     Post
                 </Button>
             </center>
