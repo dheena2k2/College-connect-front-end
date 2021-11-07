@@ -12,27 +12,8 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useCookies } from 'react-cookie';
+import { Link } from "react-router-dom";
 
-
-function viewHome() {
-    window.location.href = '/'
-}
-
-function viewProfile() {
-    window.location.href = '/profile'
-}
-
-function editProfile() {
-    window.location.href = '/editprofile'
-}
-
-function myGroups() {
-    console.log('Clicked My groups')
-}
-
-function searchUsers() {
-    console.log('Clicked Search users')
-}
 
 function onLogout(setCookie) {
     setCookie('isLoggedin', false, {path: '/'})
@@ -51,31 +32,31 @@ function Options(props) {
         PaperProps={props.PaperProps}
         transformOrigin={props.transformOrigin}
         anchorOrigin={props.anchorOrigin} >
-            <MenuItem onClick={viewHome}>
+            <MenuItem component={Link} to='/'>
                 <ListItemIcon>
                     <HomeIcon />
                 </ListItemIcon>
                 Home
             </MenuItem>
-            <MenuItem onClick={viewProfile}>
+            <MenuItem component={Link} to='profile'>
                 <ListItemIcon>
                     <AccountCircleIcon />
                 </ListItemIcon>
                 Profile
             </MenuItem>
-            <MenuItem onClick={editProfile}>
+            <MenuItem component={Link} to='editprofile'>
                 <ListItemIcon>
                     <EditIcon />
                 </ListItemIcon>
                 Edit profile
             </MenuItem>
-            <MenuItem onClick={myGroups}>
+            <MenuItem component={Link} to='mygroups'>
                 <ListItemIcon>
                     <GroupsIcon />
                 </ListItemIcon>
                 My Groups
             </MenuItem>
-            <MenuItem onClick={searchUsers}>
+            <MenuItem component={Link} to='users'>
                 <ListItemIcon>
                     <PersonSearchIcon />
                 </ListItemIcon>
