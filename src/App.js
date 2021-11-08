@@ -1,3 +1,4 @@
+import React from "react"
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Switch } from 'react-router-dom';
 import { Route } from 'react-router-dom';
@@ -12,19 +13,21 @@ import EditProfile from './components/editprofile/editprofile';
 import CreatePost from './components/createpost/createpost';
 import Group from './components/group/group';
 import MyGroups from './components/group/mygroups';
-import { useCookies } from 'react-cookie';
+import { useuser } from 'react-cookie';
 import UserTable from "./components/users/usertable";
 import './App.css';
-
-
-function findIsLoggedin(cookies) {
-  return (cookies.isLoggedin === 'true');
+import { useDispatch, useSelector } from 'react-redux';
+import { getUser } from "./CRUD/readFunctions";
+import {setuser} from "./app/userSlice";
+function findIsLoggedin(user) {
+  console.log("user",user,Boolean(user));
+  return Boolean(user && user.username);
 }
 
 
-function PrivateRoute({children, cookies, ...rest}) {  // can be accessed only if logged in
-  const isLoggedin = findIsLoggedin(cookies)
-
+function PrivateRoute({children, user, ...rest}) {  // can be accessed only if logged in
+  const isLoggedin = findIsLoggedin(user)
+  
   return (
     <Route
     {...rest}
@@ -43,8 +46,8 @@ function PrivateRoute({children, cookies, ...rest}) {  // can be accessed only i
 }
 
 
-function LoggedOutRoute({children, cookies, ...rest}) {  // can be accessed only if logged out
-  const isLoggedout = !findIsLoggedin(cookies)
+function LoggedOutRoute({children, user, ...rest}) {  // can be accessed only if logged out
+  const isLoggedout = !findIsLoggedin(user)
 
   return (
     <Route
@@ -65,58 +68,60 @@ function LoggedOutRoute({children, cookies, ...rest}) {  // can be accessed only
 
 
 function App() {
-  const [cookies, setCookie] = useCookies(['isLoggedin']);
-
-  if(!cookies.isLoggedin) {
-    setCookie('isLoggedin', false, {path: '/'})
-  }
-
-  const isLoggedin = findIsLoggedin(cookies)
-  
+  const user = useSelector(state=>state.user.user);
+  const dispatch = useDispatch();
+  const isLoggedin = user;
+  React.useEffect(()=>{
+    (async () => {
+      var res = await getUser();
+      //console.log(res.data.user)
+      if(res.data && res.data.user)dispatch(setuser(res.data.user));
+    })();
+  },[])
   return (
     <Router className="App">
       <Switch>
 
-        <LoggedOutRoute path='/login' cookies={cookies}>
+        <LoggedOutRoute path='/login' user={user}>
           <Login />
         </LoggedOutRoute>
 
-        <LoggedOutRoute path='/newuser' cookies={cookies}>
+        <LoggedOutRoute path='/newuser' user={user}>
           <Header loggedin={isLoggedin} />
           <NewUser />
         </LoggedOutRoute>
 
-        <PrivateRoute path='/profile' cookies={cookies}>
+        <PrivateRoute path='/profile' user={user}>
           <Header loggedin={isLoggedin} />
           <Profile isCurrentUser={true} />
         </PrivateRoute>
 
-        <PrivateRoute path='/users' cookies={cookies}>
+        <PrivateRoute path='/users' user={user}>
           <Header loggedin={isLoggedin} />
           <UserTable isCurrentUser={true} />
         </PrivateRoute>
 
-        <PrivateRoute path='/editprofile' cookies={cookies}>
+        <PrivateRoute path='/editprofile' user={user}>
           <Header loggedin={isLoggedin} />
           <EditProfile />
         </PrivateRoute>
 
-        <PrivateRoute path='/createpost' cookies={cookies}>
+        <PrivateRoute path='/createpost' user={user}>
           <Header loggedin={isLoggedin} />
           <CreatePost />
         </PrivateRoute>
 
-        <PrivateRoute path='/group/:id' cookies={cookies}>
+        <PrivateRoute path='/group/:id' user={user}>
           <Header loggedin={isLoggedin} />
           <Group />
         </PrivateRoute>
 
-        <PrivateRoute path='/mygroups' cookies={cookies}>
+        <PrivateRoute path='/mygroups' user={user}>
           <Header loggedin={isLoggedin} />
           <MyGroups />
         </PrivateRoute>
 
-        <PrivateRoute path='/' cookies={cookies}>
+        <PrivateRoute path='/' user={user}>
           <Header loggedin={isLoggedin} />
           <Home />
         </PrivateRoute>
