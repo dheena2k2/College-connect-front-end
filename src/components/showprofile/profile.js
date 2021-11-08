@@ -142,7 +142,7 @@ function PrimaryInfo(props) {
                         paddingLeft: '10px',
                         paddingTop: '10px'
                     }} >
-                        {props.dob && getDateString(props.dob)}
+                        {props.dob && getDateString(new Date(props.dob))}
                     </Typography>
                 </div>
             </div>
