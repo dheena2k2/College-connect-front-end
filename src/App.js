@@ -106,7 +106,7 @@ function App() {
           <CreatePost />
         </PrivateRoute>
 
-        <PrivateRoute path='/group' cookies={cookies}>
+        <PrivateRoute path='/group/:id' cookies={cookies}>
           <Header loggedin={isLoggedin} />
           <Group />
         </PrivateRoute>
