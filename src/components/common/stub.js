@@ -1,7 +1,7 @@
 export function getSampleUsers(nos) {
     const sampleUsers = [
         {
-            id: 'dheena2k2',
+            username: 'dheena2k2',
             name: 'Dheenadhayalan R',
             dob: new Date(),
             type: 'Admin',
@@ -13,7 +13,7 @@ export function getSampleUsers(nos) {
             description: ''
         },
         {
-            id: 'luffy55',
+            username: 'luffy55',
             name: 'Monkey D. Luffy',
             dob: new Date(),
             type: 'Student',
@@ -25,7 +25,7 @@ export function getSampleUsers(nos) {
             description: ''
         },
         {
-            id: 'gandalf',
+            username: 'gandalf',
             name: 'Gandalf the Grey',
             dob: new Date(),
             type: 'Higher Authority',
@@ -37,7 +37,7 @@ export function getSampleUsers(nos) {
             description: ''
         },
         {
-            id: 'morgo11',
+            username: 'morgo11',
             name: 'Morgan Stark',
             dob: new Date(),
             type: 'Student',
