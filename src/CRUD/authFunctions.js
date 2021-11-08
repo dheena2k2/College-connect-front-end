@@ -19,7 +19,7 @@ export async function signup(data){
     var result = await axios({
         method: 'post',
         withCredentials:true,
-        url: URL+"login",
+        url: URL+"signup",
         data:data
         
      })    

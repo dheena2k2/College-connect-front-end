@@ -8,12 +8,14 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import DateAdapter from '@mui/lab/AdapterDateFns'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker'
-
+import { signup } from '../../CRUD/authFunctions';
 
 const TextFieldVariant = 'filled'
 
 
-function onSubmit(details){
+async function onSubmit(details){
+    var res = await signup(details);
+    console.log("signup result",res);
     for(let key of Object.keys(details)){
         console.log(key + ': ' + details[key])
     }
@@ -74,8 +76,8 @@ class EntryListChange extends React.Component {
         this.state = {
             name: '',
             type: '',
-            rollNo: '',
-            admissionYear: '',
+            rollno: '',
+            admissionyear: '',
             branch: '',
             email: '',
             dob: max_date,
@@ -102,8 +104,8 @@ class EntryListChange extends React.Component {
         const label_name = {
             name: 'Name',
             type: 'Select the type of user',
-            rollNo: 'Roll number',
-            admissionYear: 'Year of admission',
+            rollno: 'Roll number',
+            admissionyear: 'Year of admission',
             branch: 'Branch',
             email: 'E-mail',
             dob: 'Date of birth',
