@@ -28,10 +28,8 @@ export async function getGroup(groupID){
         method: 'get',
         withCredentials:true,
         url: URL+"group",
-        data:{
-            group:{
-                groupID
-            }
+        params:{
+            groupID
         }
         
      })    
@@ -69,10 +67,8 @@ export async function getPost(postID){
         method: 'get',
         withCredentials:true,
         url: URL+"post",
-        data:{
-            post:{
-                postID
-            }
+        params:{
+            postID
         }
         
      })    
