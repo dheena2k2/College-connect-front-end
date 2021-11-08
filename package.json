@@ -15,6 +15,7 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.23.0",
     "date-fns": "^2.25.0",
+    "firebase": "^9.3.0",
     "material-ui": "^0.20.2",
     "react": "^17.0.2",
     "react-audio-player": "^0.17.0",
@@ -25,6 +26,7 @@
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
     "use-file-picker": "^1.4.1",
+    "uuid": "^8.3.2",
     "web-vitals": "^1.1.2"
   },
   "scripts": {

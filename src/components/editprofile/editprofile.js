@@ -9,6 +9,7 @@ import Badge from '@mui/material/Badge'
 import UploadIcon from '@mui/icons-material/Upload';
 import IconButton from '@mui/material/IconButton'
 import Button from '@mui/material/Button';
+import { uploadFile } from '../../storage';
 
 
 const textFieldVariant='outlined'
@@ -99,9 +100,31 @@ function EntryBox(props) {
         }
         setDetails(dummy)
     }
+    const hanldleFile = ()=>{
+        document.getElementById("prof-img").click();
 
+    }
+    const handleFileUpload = async (e) => {
+        console.log(e.target.files)
+        if(e.target.files.length>0){
+            var file =e.target.files[0];
+            const metadata = {
+                contentType: file.type,
+            };
+            var result = await uploadFile(file,metadata);
+            console.log("uploading files",file);
+            console.log();
+        }
+    }
     return (
         <div className='editprofile-subcontainer'>
+            <input 
+                type="file" 
+                id="prof-img" 
+                accept="image/*" 
+                style={{display:"none"}} 
+                onChange={handleFileUpload}
+            />
             <Badge
             overlap='circular'
             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
@@ -111,7 +134,7 @@ function EntryBox(props) {
             badgeContent={
                 <IconButton>
                 <Avatar
-                children={<UploadIcon />}
+                children={<UploadIcon onClick={hanldleFile} />}
                 alt='Upload' /></IconButton>
             } >
                 <Avatar
