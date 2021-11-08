@@ -7,7 +7,7 @@ export async function getUser(){
         url: URL+"user"
         
      })    
-     console.log("result is",result);
+     console.log("getUser result is",result);
      return result;
 }
 
@@ -57,7 +57,7 @@ export async function getPosts(){
         url: URL+"posts"
         
      })    
-     console.log("result is",result);
+     console.log("posts result is",result);
      return result;
      
 }

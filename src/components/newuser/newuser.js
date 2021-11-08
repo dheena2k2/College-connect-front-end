@@ -8,12 +8,18 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import DateAdapter from '@mui/lab/AdapterDateFns'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker'
+import { signup } from '../../CRUD/authFunctions';
+import { useSnackbar } from 'notistack';
 
 
 const TextFieldVariant = 'filled'
 
 
-function onSubmit(details){
+async function onSubmit(details,enqueueSnackbar){
+    var res = await signup(details);
+    console.log("signup result",res);
+    if(res)enqueueSnackbar("success!login to continue");
+    else enqueueSnackbar("signup failed")
     for(let key of Object.keys(details)){
         console.log(key + ': ' + details[key])
     }
@@ -74,8 +80,8 @@ class EntryListChange extends React.Component {
         this.state = {
             name: '',
             type: '',
-            rollNo: '',
-            admissionYear: '',
+            rollno: '',
+            admissionyear: '',
             branch: '',
             email: '',
             dob: max_date,
@@ -95,15 +101,15 @@ class EntryListChange extends React.Component {
     }
 
     onSubmitClick() {
-        onSubmit(this.state)
+        onSubmit(this.state,this.props.enqueueSnackbar)
     }
 
     render() {
         const label_name = {
             name: 'Name',
             type: 'Select the type of user',
-            rollNo: 'Roll number',
-            admissionYear: 'Year of admission',
+            rollno: 'Roll number',
+            admissionyear: 'Year of admission',
             branch: 'Branch',
             email: 'E-mail',
             dob: 'Date of birth',
@@ -166,12 +172,14 @@ class EntryListChange extends React.Component {
 
 
 function NewUser() {
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
     return (
         <div className='newuser-container'>
             <h1>
                 Create Account
             </h1>
-            <EntryListChange />
+            <EntryListChange enqueueSnackbar={enqueueSnackbar} closeSnackbar={closeSnackbar} />
         </div>
     );
 }

@@ -6,7 +6,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import Divider from '@mui/material/Divider';
 import Avatar from '@mui/material/Avatar';
 import CakeIcon from '@mui/icons-material/Cake';
-
+import {useSelector} from "react-redux"
 
 function getDateString(d) {
     const month_name = [
@@ -98,7 +98,7 @@ function PrimaryInfo(props) {
                         sx={{
                             fontStyle: 'italic'
                         }} >
-                            {props.rollNo}
+                            {props.rollno}
                         </Typography>
                     </div>
                     <div>
@@ -127,7 +127,7 @@ function PrimaryInfo(props) {
                     fontStyle: 'italic',
                     paddingTop: '20px'
                 }} >
-                    {'Joined the institution at ' + props.admissionYear}
+                    {'Joined the institution at ' + props.admissionyear}
                 </Typography>
                 <div
                 style={{
@@ -142,7 +142,7 @@ function PrimaryInfo(props) {
                         paddingLeft: '10px',
                         paddingTop: '10px'
                     }} >
-                        {getDateString(props.dob)}
+                        {props.dob && getDateString(new Date(props.dob))}
                     </Typography>
                 </div>
             </div>
@@ -152,15 +152,14 @@ function PrimaryInfo(props) {
 
 
 function Profile(props) {
-    const details = getUserDetails()
-    console.log('in profile')
+    const user = useSelector(state=>state.user.user);
     return (
         <div className='profile-container'>
             <h1 className='profile-title'>
                 User Profile
             </h1>
             <div className='profile-subcontainer'>
-                <PrimaryInfo isCurrentUser={props.isCurrentUser} {...details} />
+                <PrimaryInfo isCurrentUser={props.isCurrentUser} {...user} />
             </div>
         </div>
     );

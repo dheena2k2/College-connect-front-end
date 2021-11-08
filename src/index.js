@@ -7,13 +7,14 @@ import { CookiesProvider } from 'react-cookie';
 import store from './app/store'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from "react-router-dom";
+import { SnackbarProvider } from 'notistack';
 
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <CookiesProvider>
+      <SnackbarProvider>
         <App />
-      </CookiesProvider>
+      </SnackbarProvider>
     </BrowserRouter>
   </Provider>,
   document.getElementById('root')

@@ -8,20 +8,13 @@ import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import {login} from "../../CRUD/authFunctions"
-
-async function authenticateUser(details){
-    const test_details = {
-        username: 'test_usr',
-        password: 'test_pass'
+import { useDispatch } from 'react-redux';
+import { setuser } from '../../app/userSlice';
+async function authenticateUser(details,dispatch){
+    var res = await login(details.username,details.password);
+    if(res.data && res.data.user){
+        dispatch(setuser(res.data.user));
     }
-
-    let uid = null
-    login();
-    if(details.username === test_details.username && details.password === test_details.password) {
-        uid = 'ID_test'
-    }
-
-    return uid;
 }
 
 
@@ -59,13 +52,8 @@ class InputBox extends React.Component {
     }
 
     onSubmit() {
-
-        const uid = authenticateUser(this.state)
-        if(uid) {
-            this.props.setCookie('isLoggedin', true, {path: '/'})
-            this.props.setCookie('uid', uid, {path: '/'})
-            this.props.onSuccessfulAuth()
-        }
+        console.log(this.props.dispatch)
+        const uid = authenticateUser(this.state,this.props.dispatch)
     }
 
     render() {
@@ -133,8 +121,9 @@ class LoginPage extends React.Component {
             <div className='login-container'>
                 {this.state.visible && <Logo />}
                 {this.state.visible && <InputBox
+
                 onSuccessfulAuth={this.props.onSuccessfulAuth}
-                setCookie={this.props.setCookie} />}
+                dispatch={this.props.dispatch} />}
             </div>
         );
     }
@@ -142,6 +131,7 @@ class LoginPage extends React.Component {
 
 function Login() {
     const [ , setCookie] = useCookies(['isLoggedin', 'uid']);
+    const dispatch = useDispatch();
     let history = useHistory()
     let location = useLocation()
     let { from } = location.state || { from: { pathname: "/" } };
@@ -149,7 +139,7 @@ function Login() {
     return (
         <LoginPage
         onSuccessfulAuth={() => history.replace(from)}
-        setCookie={setCookie} />
+        dispatch={dispatch} />
     );
 }
 
