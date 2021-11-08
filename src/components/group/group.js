@@ -60,7 +60,7 @@ function GroupContents() {
             </Typography>
             <Grid container >
                 <Grid item xs={12} style={{padding:"10px"}}>
-                    <Typography variant="h5">Owners</Typography>
+                    <Typography sx={{fontFamily: 'arvo'}} variant="h5">Owners</Typography>
                 </Grid>
                 <Grid item xs={12}>
                     <UserTable/>
@@ -68,7 +68,7 @@ function GroupContents() {
             </Grid>
             <Grid container>
                 <Grid item  style={{padding:"10px"}} >
-                    <Typography variant="h5">Participants</Typography>
+                    <Typography sx={{fontFamily: 'arvo'}} variant="h5">Participants</Typography>
                 </Grid>
                 <Grid item xs={12}>
                     <UserTable/>
