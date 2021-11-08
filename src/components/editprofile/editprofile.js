@@ -9,7 +9,7 @@ import Badge from '@mui/material/Badge'
 import UploadIcon from '@mui/icons-material/Upload';
 import IconButton from '@mui/material/IconButton'
 import Button from '@mui/material/Button';
-import { uploadFile } from '../../storage';
+import { uploadFiles } from '../../storage';
 
 
 const textFieldVariant='outlined'
@@ -81,6 +81,7 @@ function EntryBox(props) {
 
     const [details, setDetails] = React.useState({
         name: props.name,
+        profileUrl: props.profileUrl,
         rollNo: props.rollNo,
         description: props.description,
         email: props.email,
@@ -105,15 +106,9 @@ function EntryBox(props) {
 
     }
     const handleFileUpload = async (e) => {
-        console.log(e.target.files)
         if(e.target.files.length>0){
-            var file =e.target.files[0];
-            const metadata = {
-                contentType: file.type,
-            };
-            var result = await uploadFile(file,metadata);
-            console.log("uploading files",file);
-            console.log();
+            var result = await uploadFiles(e.target.files);
+            setValue(result[0], 'profileUrl')
         }
     }
     return (
@@ -142,8 +137,8 @@ function EntryBox(props) {
                     width: '200px',
                     height: '200px',
                 }}
-                src={props.profileUrl}
-                alt={props.name} />
+                src={details.profileUrl}
+                alt={details.name} />
             </Badge>
             <div className='editprofile-entrylist'>
                 {
