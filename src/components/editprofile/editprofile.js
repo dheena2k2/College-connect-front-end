@@ -10,7 +10,9 @@ import UploadIcon from '@mui/icons-material/Upload';
 import IconButton from '@mui/material/IconButton'
 import Button from '@mui/material/Button';
 import { uploadFile } from '../../storage';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUser } from '../../CRUD/updateFunction'; 
+import { setuser } from '../../app/userSlice';
 
 const textFieldVariant='outlined'
 
@@ -36,8 +38,12 @@ function getUserDetails() {
 }
 
 
-function onSaveChanges(details) {
-    console.log(details)
+async function onSaveChanges(details,dispatch) {
+    console.log("changing userobj",details);
+    var res = await updateUser(details);
+    if(res.data && res.data.user){
+        dispatch(setuser(res.data.user));
+    }
 }
 
 
@@ -66,12 +72,13 @@ function UserDOB(props) {
 
 
 function EntryBox(props) {
+    const dispatch = useDispatch();
     const entry_label = {
         name: 'Name',
-        rollNo: 'Roll number',
+        rollno: 'Roll number',
         description: 'Description',
         email: 'E-mail',
-        admissionYear: 'Year of admission',
+        admissionyear: 'Year of admission',
         branch: 'Branch',
         dob: 'Date of birth'}
 
@@ -81,10 +88,10 @@ function EntryBox(props) {
 
     const [details, setDetails] = React.useState({
         name: props.name,
-        rollNo: props.rollNo,
+        rollno: props.rollno,
         description: props.description,
         email: props.email,
-        admissionYear: props.admissionYear,
+        admissionyear: props.admissionyear,
         branch: props.branch,
         dob: props.dob})
 
@@ -142,7 +149,7 @@ function EntryBox(props) {
                     width: '200px',
                     height: '200px',
                 }}
-                src={props.profileUrl}
+                src={props.profileurl}
                 alt={props.name} />
             </Badge>
             <div className='editprofile-entrylist'>
@@ -179,7 +186,7 @@ function EntryBox(props) {
                     ))
                 }
                 <Button
-                onClick={() => onSaveChanges(details)}
+                onClick={() => onSaveChanges(details,dispatch)}
                 variant='contained'
                 sx={{
                     width: '30%',
@@ -195,7 +202,7 @@ function EntryBox(props) {
 
 
 function EditProfile() {
-    const details = getUserDetails()
+    const details = useSelector(state=>state.user.user)
     return (
         <div className='editprofile-container'>
             <div>
