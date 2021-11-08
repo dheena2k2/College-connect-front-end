@@ -9,13 +9,17 @@ import DateAdapter from '@mui/lab/AdapterDateFns'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker'
 import { signup } from '../../CRUD/authFunctions';
+import { useSnackbar } from 'notistack';
+
 
 const TextFieldVariant = 'filled'
 
 
-async function onSubmit(details){
+async function onSubmit(details,enqueueSnackbar){
     var res = await signup(details);
     console.log("signup result",res);
+    if(res)enqueueSnackbar("success!login to continue");
+    else enqueueSnackbar("signup failed")
     for(let key of Object.keys(details)){
         console.log(key + ': ' + details[key])
     }
@@ -97,7 +101,7 @@ class EntryListChange extends React.Component {
     }
 
     onSubmitClick() {
-        onSubmit(this.state)
+        onSubmit(this.state,this.props.enqueueSnackbar)
     }
 
     render() {
@@ -168,12 +172,14 @@ class EntryListChange extends React.Component {
 
 
 function NewUser() {
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
     return (
         <div className='newuser-container'>
             <h1>
                 Create Account
             </h1>
-            <EntryListChange />
+            <EntryListChange enqueueSnackbar={enqueueSnackbar} closeSnackbar={closeSnackbar} />
         </div>
     );
 }
