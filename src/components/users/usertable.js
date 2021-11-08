@@ -10,6 +10,7 @@ import TableRow from '@mui/material/TableRow';
 import {TextField,Button,Grid,Avatar} from "@mui/material"
 import {Link} from "react-router-dom"
 import {getUsers} from "../../CRUD/readFunctions"
+import Typography from '@mui/material/Typography'
 const columns = [
   { id: 'username', label: 'Username', minWidth: 50 },
   { id: 'name', label: 'Name', minWidth: 50 },
@@ -153,7 +154,7 @@ export default function StickyHeadTable(props) {
               <Button>Search</Button>
           </Grid>
       </Grid>
-      <TableContainer style={{padding:"50px"}}>
+      <TableContainer style={{padding:"10px"}}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -163,7 +164,13 @@ export default function StickyHeadTable(props) {
                   align={column.align}
                   style={{fontFamily:"arvo"}}
                 >
-                  {column.label}
+                  <Typography
+                  sx={{
+                    fontFamily: 'arvo',
+                    fontWeight: 'bold'
+                  }}>
+                    {column.label}
+                  </Typography>
                 </TableCell>
               ))}
             </TableRow>
