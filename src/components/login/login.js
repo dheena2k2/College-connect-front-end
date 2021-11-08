@@ -7,16 +7,16 @@ import { useHistory } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import {login} from "../../CRUD/authFunctions"
 
-
-function authenticateUser(details){
+async function authenticateUser(details){
     const test_details = {
         username: 'test_usr',
         password: 'test_pass'
     }
 
     let uid = null
-
+    login();
     if(details.username === test_details.username && details.password === test_details.password) {
         uid = 'ID_test'
     }

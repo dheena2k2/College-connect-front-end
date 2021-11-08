@@ -9,6 +9,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import {TextField,Button,Grid,Avatar} from "@mui/material"
 import {Link} from "react-router-dom"
+import {getUsers} from "../../CRUD/readFunctions"
 const columns = [
   { id: 'username', label: 'Username', minWidth: 50 },
   { id: 'name', label: 'Name', minWidth: 50 },
@@ -137,6 +138,9 @@ export default function StickyHeadTable(props) {
     setPage(0);
   };
 
+  React.useEffect(()=>{
+    getUsers();
+  },[])
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden',fontFamily:"arvo" }}>
       <Grid container alignItems="center" justifyContent="center" style={{padding:"20px"}}>

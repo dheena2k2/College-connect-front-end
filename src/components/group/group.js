@@ -1,3 +1,5 @@
+import React from "react";
+import {useLocation} from "react-router-dom";
 import  './group.css';
 import Box from '@mui/material/Box';
 import {Grid} from "@mui/material"
@@ -8,7 +10,20 @@ import { grey } from '@mui/material/colors';
 import UserTable from "../users/usertable";
 
 function GroupContents() {
+    const location = useLocation();
+    const [group,setGroup] = React.useState(false);
+    const [loading,setLoading] = React.useState(true);
+    React.useEffect(()=>{
+        var {pathname} = location;
+        var arr = pathname.split("/");
+        var id = arr.length && arr[arr.length-1];
+        var getData =async()=>{
+            
+        }
+        console.log(id);
+    },[])
     const description = 'Hello. This is test sentence. This is test sentence. This is test sentence. This is test sentence. This is test sentence. This is test sentence. This is test sentence. This is test sentence. This is test sentence. This is test sentence. This is test sentence. This is test sentence. This is test sentence.'
+    if(!group)return <div>Group does not exists</div>
     return (
         <div className='group-innercontainer'>
             <Box
