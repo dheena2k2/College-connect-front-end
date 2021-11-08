@@ -57,7 +57,7 @@ export async function getPosts(){
         url: URL+"posts"
         
      })    
-     console.log("result is",result);
+     console.log("posts result is",result);
      return result;
      
 }

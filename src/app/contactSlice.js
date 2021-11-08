@@ -20,6 +20,6 @@ export const contactSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount } = contactSlice.actions
+export const { setgroups,setusers,addgroup } = contactSlice.actions
 
 export default contactSlice.reducer

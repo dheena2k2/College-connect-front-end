@@ -13,7 +13,10 @@ import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useCookies } from 'react-cookie';
 import { Link } from "react-router-dom";
-
+import {getPosts,getGroups,getUsers} from '../../CRUD/readFunctions';
+import { useDispatch } from 'react-redux';
+import { setgroups, setusers } from '../../app/contactSlice';
+import { setposts } from '../../app/postSlice';
 
 function onLogout(setCookie) {
     setCookie('isLoggedin', false, {path: '/'})
@@ -89,6 +92,19 @@ export default function Header(props) {
     const handleClick = (event) => { setAnchorEl(event.currentTarget) }
     const handleClose = () => { setAnchorEl(null) }
     const loggedin = props.loggedin
+    const dispatch = useDispatch();
+    React.useEffect(()=>{
+        var initializestates = async ()=>{
+            var users = await getUsers();
+            users.data && users.data.users && dispatch(setusers(users));
+            var posts = await getPosts();
+            posts.data && posts.data.posts && dispatch(setposts(posts.data.posts));
+            var groups = await getGroups();
+            groups.data && groups.data.groups && dispatch(setgroups(groups.data.groups));
+        }
+
+        initializestates();
+    },[])
 
     return (
         <>
