@@ -70,6 +70,7 @@ function LoggedOutRoute({children, user, ...rest}) {  // can be accessed only if
 
 function App() {
   const user = useSelector(state=>state.user.user);
+  const users = useSelector(state=>state.contacts.users);
   const dispatch = useDispatch();
   const [loading,setLoading] =React.useState(true);
   const isLoggedin = user;
@@ -102,7 +103,7 @@ function App() {
 
         <PrivateRoute path='/users' user={user}>
           <Header loggedin={isLoggedin} />
-          <UserTable isCurrentUser={true} />
+          <UserTable isCurrentUser={true} users={users}/>
         </PrivateRoute>
 
         <PrivateRoute path='/editprofile' user={user}>

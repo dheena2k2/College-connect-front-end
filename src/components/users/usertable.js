@@ -14,9 +14,9 @@ import Typography from '@mui/material/Typography'
 const columns = [
   { id: 'username', label: 'Username', minWidth: 50 },
   { id: 'name', label: 'Name', minWidth: 50 },
-  { id: 'usertype', label: 'User type', minWidth: 50 },
+  { id: 'type', label: 'User type', minWidth: 50 },
   { id: 'branch', label: 'Branch', minWidth: 50 },
-  { id: 'admissionno', label: 'Admission no', minWidth: 50 },
+  { id: 'admissionYear', label: 'Admission Year', minWidth: 50 },
   
 ];
 
@@ -26,86 +26,86 @@ const rows = [
   {
       username:"john",
       name:"john",
-      usertype:"student",
+      type:"student",
       branch:"cse",
-      admissionno:"286286",
+      admissionYear:"286286",
   },
   {
     username:"john",
     name:"john",
-    usertype:"student",
+    type:"student",
     branch:"cse",
-    admissionno:"286286",
+    admissionYear:"286286",
 },
 {
     username:"john",
     name:"robert",
-    usertype:"student",
+    type:"student",
     branch:"cse",
-    admissionno:"286286",
+    admissionYear:"286286",
 },
 {
     username:"john",
     name:"robert",
-    usertype:"student",
+    type:"student",
     branch:"cse",
-    admissionno:"286286",
+    admissionYear:"286286",
 },
 {
     username:"john",
     name:"spike",
-    usertype:"student",
+    type:"student",
     branch:"cse",
-    admissionno:"286286",
+    admissionYear:"286286",
 },
 {
   username:"john",
   name:"spike",
-  usertype:"student",
+  type:"student",
   branch:"cse",
-  admissionno:"286286",
+  admissionYear:"286286",
 },
 {
   username:"john",
   name:"peter",
-  usertype:"student",
+  type:"student",
   branch:"cse",
-  admissionno:"286286",
+  admissionYear:"286286",
 },
 {
   username:"john",
   name:"peter",
-  usertype:"student",
+  type:"student",
   branch:"cse",
-  admissionno:"286286",
+  admissionYear:"286286",
 },
 {
     username:"john",
     name:"john",
-    usertype:"student",
+    type:"student",
     branch:"cse",
-    admissionno:"286286",
+    admissionYear:"286286",
 },
 {
   username:"john",
   name:"john",
-  usertype:"student",
+  type:"student",
   branch:"cse",
-  admissionno:"286286",
+  admissionYear:"286286",
 },
 {
   username:"john",
   name:"john",
-  usertype:"student",
+  type:"student",
   branch:"cse",
-  admissionno:"286286",
+  admissionYear:"286286",
 },
 {
   username:"john",
   name:"john",
-  usertype:"student",
+  type:"student",
   branch:"cse",
-  admissionno:"286286",
+  admissionYear:"286286",
 },
 ];
 
@@ -126,9 +126,10 @@ export default function StickyHeadTable(props) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [query,setQuery] = React.useState("");
-  const [results,setResults] = React.useState(props.users || rows);
+  const users = props.users || [];
+  const [results,setResults] = React.useState(users);
   React.useEffect(()=>{
-    setResults(findResults(query,rows));
+    setResults(findResults(query,users));
   },[query])
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
