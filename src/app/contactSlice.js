@@ -20,10 +20,10 @@ export const contactSlice = createSlice({
       var newgroups = []
       for(var group of state.groups){
           if(group._id==action.payload._id){
-            group.push(action.payload);
+            newgroups.push(action.payload);
           }
           else{
-            group.push(group);
+            newgroups.push(group);
           }
       }
       state.groups = newgroups;
