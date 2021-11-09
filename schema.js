@@ -1,0 +1,148 @@
+var Group = ({
+	_id:{
+		type:String,
+		default:uuidv4
+	},
+	name:{
+		type:String,
+		unique:true,
+		required:true
+	},
+	description:{
+		type:String,
+		required:true
+	},
+	owners:{
+		type:[{ type: String, ref: 'Account' ,sparse:true}],
+		sparse:true,
+		default:[],
+		required:true
+	},
+	visibleTo:{
+		
+		type:[{ type: String, ref: 'Account',sparse:true }],
+		sparse:true,
+		default:[],
+		required:true
+	},
+
+	profileUrl:{
+		type:String,
+		default:"",
+		required:true
+	}
+});
+
+var Post = ({
+	_id:{
+		type:String,
+		default:uuidv4
+	},
+	ownerID:{
+		type:String,
+		required:true
+	},
+	ownerProfileUrl:{
+		type:String,
+		required:true
+	},
+	createdTime:{
+		type:Date,
+		required:true,
+		default:Date,
+	},
+	description:{
+		type:String,
+		default:"",
+		required:true
+	},
+	type:{
+		type:String,
+		default:"",
+		required:true
+	},
+	file_links:{
+		type:Array,
+		default:[],
+		required:true
+	},
+	expiryTime:{
+		type:String,
+		default:"",
+		required:false
+	},
+	pollData:{
+		type:String,
+		default:"",
+		required:false
+	},
+	pollStatus:{
+		type:String,
+		default:"",
+		required:false
+	},
+	groups:{
+		type:[{ type: String, ref: 'Group' ,sparse:true}],
+		sparse:true,
+		default:[],
+		required:true
+	}
+});
+
+var Account = ({
+	_id:{
+		type:String,
+		default:uuidv4
+	},
+	username:{
+		type:String,
+		unique:false,
+		required:true,
+
+	},
+	name:{
+		type:String,
+		default:"",
+		required:true
+	},
+	dob:{
+		type:String,
+		default:"",
+		required:false
+	},
+	type:{
+		type:String,
+		default:"Student",
+		required:false
+	},
+	rollNo:{
+		type:String,
+		default:"",
+		required:false
+	},
+	admissionYear:{
+		type:String,
+		default:"",
+		required:false
+	},
+	branch:{
+		type:String,
+		default:"",
+		required:false
+	},
+	profileUrl:{
+		type:String,
+		default:"",
+		required:false
+	},
+	email:{
+		type:String,
+		default:"",
+		required:false
+	},
+	description:{
+		type:String,
+		default:"",
+		required:false
+	}
+});
