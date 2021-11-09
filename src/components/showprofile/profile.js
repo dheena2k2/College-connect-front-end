@@ -7,6 +7,7 @@ import Divider from '@mui/material/Divider';
 import Avatar from '@mui/material/Avatar';
 import CakeIcon from '@mui/icons-material/Cake';
 import {useSelector} from "react-redux"
+import Box from '@mui/material/Box'
 
 function getDateString(d) {
     const month_name = [
@@ -78,9 +79,23 @@ function PrimaryInfo(props) {
                 sx={{
                     fontSize: 40,
                     fontFamily: 'garamond',
-                    fontStyle: 'bold'
+                    fontStyle: 'bold',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'flex-end'
                 }} >
                     {props.name}
+                    <Typography
+                    sx={{
+                        fontFamily: 'arvo',
+                        color: grey[500],
+                        fontSize: '15px',
+                        fontStyle: 'italic',
+                        marginBottom: '10px',
+                        marginLeft: '5px'
+                    }}>
+                        {'(' + props.username + ')'}
+                    </Typography>
                 </Typography>
                 <Typography
                 sx={{
@@ -98,7 +113,7 @@ function PrimaryInfo(props) {
                         sx={{
                             fontStyle: 'italic'
                         }} >
-                            {props.rollno}
+                            {props.rollNo}
                         </Typography>
                     </div>
                     <div>
@@ -127,7 +142,7 @@ function PrimaryInfo(props) {
                     fontStyle: 'italic',
                     paddingTop: '20px'
                 }} >
-                    {'Joined the institution at ' + props.admissionyear}
+                    {'Joined the institution at ' + props.admissionYear}
                 </Typography>
                 <div
                 style={{

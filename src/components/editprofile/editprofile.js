@@ -13,6 +13,7 @@ import { uploadFiles } from '../../storage';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../../CRUD/updateFunction'; 
 import { setuser } from '../../app/userSlice';
+import { useHistory } from 'react-router-dom';
 
 const textFieldVariant='outlined'
 
@@ -73,12 +74,13 @@ function UserDOB(props) {
 
 function EntryBox(props) {
     const dispatch = useDispatch();
+    const history = useHistory();
     const entry_label = {
         name: 'Name',
-        rollno: 'Roll number',
+        rollNo: 'Roll number',
         description: 'Description',
         email: 'E-mail',
-        admissionyear: 'Year of admission',
+        admissionYear: 'Year of admission',
         branch: 'Branch',
         dob: 'Date of birth'}
 
@@ -88,11 +90,11 @@ function EntryBox(props) {
 
     const [details, setDetails] = React.useState({
         name: props.name,
-        profileUrl: props.profileurl,
-        rollno: props.rollno,
+        profileUrl: props.profileUrl,
+        rollNo: props.rollNo,
         description: props.description,
         email: props.email,
-        admissionyear: props.admissionyear,
+        admissionYear: props.admissionYear,
         branch: props.branch,
         dob: props.dob})
 
@@ -118,6 +120,12 @@ function EntryBox(props) {
             setValue(result[0], 'profileUrl')
         }
     }
+
+    const saveChanges = (passedDetails, passedDispatch) => {
+        onSaveChanges(passedDetails, passedDispatch)
+        history.push('/profile')
+    }
+
     return (
         <div className='editprofile-subcontainer'>
             <input 
@@ -144,7 +152,7 @@ function EntryBox(props) {
                     width: '200px',
                     height: '200px',
                 }}
-                src={details.profileurl}
+                src={details.profileUrl}
                 alt={details.name} />
             </Badge>
             <div className='editprofile-entrylist'>
@@ -181,7 +189,7 @@ function EntryBox(props) {
                     ))
                 }
                 <Button
-                onClick={() => onSaveChanges(details,dispatch)}
+                onClick={() => saveChanges(details,dispatch)}
                 variant='contained'
                 sx={{
                     width: '30%',
