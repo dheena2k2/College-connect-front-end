@@ -26,6 +26,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useFilePicker } from 'use-file-picker';
 import {useSelector,useDispatch} from "react-redux"
 import {addpost} from "../../app/postSlice"
+import {createPost} from "../../CRUD/createFunctions"; 
 import { uploadFiles } from '../../storage'
 import LinearProgress from '@mui/material/LinearProgress';
 
@@ -302,7 +303,7 @@ function SelectGroupDialog(props) {
     const {open, onClose} = props
     const selectedGroups = props.parentList
     const setSelectedGroups = props.setParentList
-    const userGroups = getGroups()
+    const userGroups = useSelector(state=>state.contacts.groups);
 
     const selectGroup = (group) => {
         const selGroup = group
@@ -357,7 +358,7 @@ function SelectGroupDialog(props) {
                             }}
                             color='success'
                             onDelete={() => removeGroup(group)}
-                            label={group} />}
+                            label={group.name} />}
 
                             {!selectedGroups.includes(group) &&
                             <Chip
@@ -369,7 +370,7 @@ function SelectGroupDialog(props) {
                                 marginBottom: '5px'
                             }}
                             onClick={() => selectGroup(group)}
-                            label={group} />}
+                            label={group.name} />}
 
                         </div>
                     ))
@@ -502,7 +503,7 @@ function CreatePostEntry() {
     const onAddGroup = () => {
         setSelectGroupOpen(true)
     }
-    const addPost = () => {
+    const addPost = async () => {
         console.log("adding post");
         let newpost = {
             ownerID: user.username,
@@ -510,7 +511,7 @@ function CreatePostEntry() {
             createdTime: new Date(),
             type: finalPostType,
             description: description,
-            groups: groups
+            groups: groups.map(group=>group._id)
         }
         if(finalPostType === 'poll') {
             newpost["pollStatus"] = 'active'
@@ -523,7 +524,10 @@ function CreatePostEntry() {
             newpost["file_links"] = fileLinks
         }
         console.log(newpost)
-        // dispatch(addpost(newpost));
+        var res = await createPost(newpost);
+        console.log("post result",res);
+        if(res.data && res.data.post)dispatch(addpost(res.data.post));
+        dispatch(addpost(newpost));
     }
 
     return (
@@ -637,7 +641,7 @@ function CreatePostEntry() {
                 </Typography>
                 <div className='createpost-groups'>
                     {
-                        groups.map((groupName, i) => (
+                        groups.map((group, i) => (
                             <div key={i}>
                                 <Chip
                                 sx={{
@@ -647,7 +651,7 @@ function CreatePostEntry() {
                                     marginBottom: '5px'
                                 }}
                                 id={i.toString()}
-                                label={groupName}
+                                label={group.name}
                                 onDelete={(event) => deleteGroup(i)}
                                 variant='outlined' />
                             </div>

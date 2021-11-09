@@ -37,9 +37,11 @@ function chooseOption(event, postId, value, setter) {
 
 
 function stringifyList(content_list) {
-    let content = content_list[0]
-    for(var i=1; i<content_list.length; i+=1) {
-        content += ', ' + content_list[i]
+    let content = ""
+    for(var i=0; i<content_list.length; i+=1) {
+        if(i==0)content += content_list[i].name;
+        else
+        content += ', ' + content_list[i].name;
     }
 
     return content
@@ -68,7 +70,7 @@ function PostContainer(props) {
                         marginRight: '10px'
                     }}
                     src={props.ownerProfileUrl}
-                    alt={props.ownerId} />
+                    alt={props.ownerID} />
                     <Typography sx={{
                         fontStyle: 'italic',
                         fontFamily: 'arvo'
@@ -99,7 +101,7 @@ function PostContainer(props) {
                             fontStyle: 'italic',
                             color: grey[500]
                         }} >
-                            {dateToString(props.createdTime)}
+                            {dateToString(new Date(props.createdTime))}
                         </Typography>
                         {currentUser &&
                         <IconButton
