@@ -144,11 +144,9 @@ function PostContainer(props) {
                     </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <Typography sx={{
-                        fontFamily: 'arvo'
-                    }}>
-                        {stringifyList(props.groups)}
-                    </Typography>
+                    <div>
+                        {props.groups.map(group=><Chip label={group.name}/>)}
+                    </div>
                 </AccordionDetails>
             </Accordion>
         </div>
