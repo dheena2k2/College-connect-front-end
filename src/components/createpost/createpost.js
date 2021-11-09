@@ -73,7 +73,7 @@ function FilePreview({type, finalUrl}) {
             
             
             {type === 'image' && finalUrl !== '' &&
-            <img width='100%' src={finalUrl} alt='error' />}
+            <img className='createpost-img' src={finalUrl} alt='error' />}
 
             {type === 'video' && finalUrl !== '' &&
             <video width='100%' controls>
@@ -132,6 +132,14 @@ function UploadDialog(props) {
         let tempUrlHolder = []
         if(event.target.files.length > 0) {
             tempUrlHolder = await uploadFiles(files)
+        }
+        else {
+            setFinalUrl('')
+            setTempUrl('')
+        }
+        if(postType !== 'files' && tempUrlHolder.length === 1) {
+            setFinalUrl(tempUrlHolder[0])
+            setTempUrl(tempUrlHolder[0])
         }
         setFileUrls(tempUrlHolder)
     }
@@ -335,6 +343,7 @@ function CreatePostEntry() {
     const [selectGroupOpen, setSelectGroupOpen] = React.useState(false)
     const [fileLinks, setFileLinks] = React.useState([])
     const dispatch = useDispatch();
+    const isAttached = (fileLinks.length > 0)
 
     const openDialog = () => {
         setDialogOpen(true)
@@ -531,7 +540,7 @@ function CreatePostEntry() {
                 onClick={openDialog}
                 variant='outlined'
                 startIcon={<AttachFileIcon />} >
-                    Attachment
+                    {isAttached ? 'File Attached' : 'Attach file'}
                 </Button>
                 <UploadDialog
                 open={dialogOpen}
