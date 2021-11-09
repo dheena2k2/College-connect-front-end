@@ -16,10 +16,17 @@ import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import { publishedPollPostDetails } from './stub';
+import { deletepost } from '../../app/postSlice';
+import {deletePost as deletePostCRUD} from "../../CRUD/deleteFunctions";
+import { useDispatch } from 'react-redux';
+async function deletePost(postID,dispatch) {
+    var sure = window.confirm('Are you sure you want to delete this post');
+    console.log("delting this post",postID);
+    var res = await deletePostCRUD(postID);
+    if(res.data && res.data.post){
+        dispatch(deletepost(postID));
+    }
 
-
-function deletePost(postId) {
-    var sure = window.confirm('Are you sure you want to delete this post')
 }
 
 
@@ -37,9 +44,11 @@ function chooseOption(event, postId, value, setter) {
 
 
 function stringifyList(content_list) {
-    let content = content_list[0]
-    for(var i=1; i<content_list.length; i+=1) {
-        content += ', ' + content_list[i]
+    let content = ""
+    for(var i=0; i<content_list.length; i+=1) {
+        if(i==0)content += content_list[i].name;
+        else
+        content += ', ' + content_list[i].name;
     }
 
     return content
@@ -59,6 +68,7 @@ function dateToString(currentdate) {
 
 function PostContainer(props) {
     const currentUser = true
+    const dispatch = useDispatch();
     return (
         <div className='post-container'>
             <div className='post-container-head'>
@@ -68,12 +78,13 @@ function PostContainer(props) {
                         marginRight: '10px'
                     }}
                     src={props.ownerProfileUrl}
-                    alt={props.ownerId} />
+                    alt={props.ownerID} />
                     <Typography sx={{
-                        fontStyle: 'italic',
+                        fontWeight:"600",
+                        fontSize:"1.5rem",
                         fontFamily: 'arvo'
                     }} >
-                        {props.ownerID}
+                        {props.ownerID.charAt(0).toUpperCase() + props.ownerID.substr(1).toLowerCase()}
                     </Typography>
                 </div>
                 <div>
@@ -99,11 +110,11 @@ function PostContainer(props) {
                             fontStyle: 'italic',
                             color: grey[500]
                         }} >
-                            {dateToString(props.createdTime)}
+                            {dateToString(new Date(props.createdTime))}
                         </Typography>
                         {currentUser &&
                         <IconButton
-                        onClick={() => deletePost(props.ID)}>
+                        onClick={() => deletePost(props._id,dispatch)}>
                             <DeleteIcon />
                         </IconButton>}
                     </Box>
@@ -133,11 +144,9 @@ function PostContainer(props) {
                     </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <Typography sx={{
-                        fontFamily: 'arvo'
-                    }}>
-                        {stringifyList(props.groups)}
-                    </Typography>
+                    <div>
+                        {props.groups.map(group=><Chip label={group.name}/>)}
+                    </div>
                 </AccordionDetails>
             </Accordion>
         </div>
@@ -239,16 +248,16 @@ export function Post(props) {
 
             <Typography sx={{
                 fontFamily: 'arvo',
-                color: grey[500],
+                color: grey[1000],
                 fontStyle: 'italic',
-                marginTop: '20px'
+                margin: '10px 5px'
             }}>
                 {props.description}
             </Typography>
 
             {props.type === 'poll'&&
             <PollOptions
-            postId={props.ID}
+            postId={props._id}
             options={props.options}
             status={props.pollStatus} />}
             </div>

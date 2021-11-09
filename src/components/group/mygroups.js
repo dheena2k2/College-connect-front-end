@@ -4,14 +4,17 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { grey } from '@mui/material/colors';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Button,Chip } from '@mui/material';
 
 
-function GroupCell() {
-    const profileUrl = ''
-    const groupId = 'sample1'
-    const groupName = 'Sample Group'
-    const description = 'This is sample. This is sample. This is sample. This is sample. This is sample. This is sample. This is sample. This is sample. This is sample. This is sample.'
-
+function GroupCell({group}) {
+    const profileUrl = group.profileUrl;
+    const groupID = group._id;
+    const groupName = group.name;
+    const description = group.description;
+    const owners = group.owners;
+    const visibleTo = group.visibleTo;
     return (
         <div className='mygroups-innercontainer'>
             <GroupPic
@@ -53,16 +56,37 @@ function GroupCell() {
                 }}>
                     {description}
                 </Typography>
+                <Box style={{marginTop:"5px"}}>
+                    <Typography style={{fontFamily:"arvo",fontWeight:"bolder",fontStyle: 'italic',}}>Owners</Typography>
+                   {owners.map((owner)=><Chip label={owner.name} key={owner._id}/>)}
+                       
+                </Box>
+                <Box style={{marginTop:"5px"}}>
+                    <Typography style={{fontFamily:"arvo",fontWeight:"bolder",fontStyle: 'italic',}}>Participants</Typography>
+                   {visibleTo.map((owner)=><Chip label={owner.name} key={owner._id}/>)}
+                       
+                </Box>
             </Box>
+            <Button 
+                variant="contained" 
+                style={{display:"block",marginLeft:"auto",marginRight:"0"}}
+                component={Link}
+                to={`/editgroup/${groupID}`}
+            >
+                    edit group
+            </Button>
         </div>
     );
 }
 
 
 function MyGroups() {
+    const groups = useSelector(state=>state.contacts.groups);
     return (
         <div className='mygroups-container'>
-            <GroupCell />
+            <Typography variant="h3" align="center" style={{margin:"20px",fontFamily:"arvo",fontWeight:"700"}}>My groups</Typography>
+            {groups.map((group)=><GroupCell key={group._id} group={group}/>)}
+            
         </div>
     );
 }

@@ -30,27 +30,6 @@ function onCreatePostClick() {
 function Home() {
     const Posts = useSelector(state=>state.post.posts);
     const dispatch = useDispatch();
-    const [isLoading,setIsLoading] = React.useState(true);
-    React.useEffect(()=>{
-        var newposts = [];
-        newposts.push({...imagePostDetails()});
-        newposts.push({...audioPostDetails()});
-        newposts.push({...videoPostDetails()});
-        newposts.push({...youtubePostDetails()});
-        newposts.push({...newPollPostDetails()});
-        newposts.push({...selectedPollPostDetails()});
-        newposts.push({...publishedPollPostDetails()});
-        setTimeout(()=>{
-            dispatch(setposts(newposts));
-            console.log("newposts set");
-        },5000)
-    },[])
-
-    if(Posts.length==0)
-        return <div className='home-container'>
-                    <p>Loading....</p>
-                </div>
-    console.log("Posts",Posts); 
     const isPostableUser = postableUser()
     return (
         <>

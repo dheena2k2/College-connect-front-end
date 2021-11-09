@@ -105,7 +105,7 @@ export default function CreateGroup({groupID}){
     return (
         <Grid container alignContent='center' justifyContent="center" alignItems="center" style={{padding:"20px 250px"}}>
             <Grid item xs={12}>
-            <Typography variant="h4" align="center" style={{margin:"20px"}}>{mode=="create"?"Create":"Edit"} Group</Typography>
+            <Typography variant="h3" align="center" style={{margin:"20px",fontFamily:"arvo",fontWeight:"800"}}>{mode=="create"?"Create":"Edit"} Group</Typography>
             </Grid>
             <input 
                 type="file" 
