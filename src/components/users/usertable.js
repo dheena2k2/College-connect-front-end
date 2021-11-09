@@ -126,7 +126,7 @@ export default function StickyHeadTable(props) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [query,setQuery] = React.useState("");
-  const [results,setResults] = React.useState(rows);
+  const [results,setResults] = React.useState(props.users || rows);
   React.useEffect(()=>{
     setResults(findResults(query,rows));
   },[query])

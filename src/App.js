@@ -19,6 +19,7 @@ import './App.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from "./CRUD/readFunctions";
 import {setuser} from "./app/userSlice";
+import CreateGroup from "./components/creategroup/creategroup";
 function findIsLoggedin(user) {
   console.log("user",user,Boolean(user));
   return Boolean(user && user.username);
@@ -115,7 +116,10 @@ function App() {
           <Header loggedin={isLoggedin} />
           <Group />
         </PrivateRoute>
-
+        <PrivateRoute path='/creategroup' user={user}>
+          <Header loggedin={isLoggedin} />
+          <CreateGroup />
+        </PrivateRoute>
         <PrivateRoute path='/mygroups' user={user}>
           <Header loggedin={isLoggedin} />
           <MyGroups />
