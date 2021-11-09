@@ -28,13 +28,15 @@ function onCreatePostClick() {
 
 
 function Home() {
-    const Posts = useSelector(state=>state.post.posts);
+    var Posts = useSelector(state=>state.post.posts);
+    var rPosts = [...Posts];
+    rPosts.reverse();
     const dispatch = useDispatch();
     const isPostableUser = postableUser()
     return (
         <>
         <div className='home-container'>
-            {Posts.map((post,ind)=>(<Post key={ind} {...post} />))}
+            {rPosts.map((post,ind)=>(<Post key={ind} {...post} />))}
         </div>
         {isPostableUser &&
         <Fab
