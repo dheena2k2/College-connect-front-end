@@ -64,7 +64,7 @@ var Post = ({
 	file_links:{
 		type:Array,
 		default:[],
-		required:true
+		required:false
 	},
 	expiryTime:{
 		type:String,
