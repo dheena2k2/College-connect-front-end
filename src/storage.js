@@ -36,3 +36,19 @@ export const uploadFile = async (file,metadata) => {
     return result;
       
 }
+
+
+export async function uploadFiles(files) {
+  let urlFront = 'https://firebasestorage.googleapis.com/v0/b/college-connect-8fa77.appspot.com/o/'
+  let urlLast = '?alt=media'
+  let fileUrls = []
+  for(var file of files) {
+    let metadata = {
+      contentType: file.type
+    }
+    let result = await uploadFile(file, metadata)
+    let completeUrl = urlFront + result.metadata.fullPath +urlLast
+    fileUrls.push(completeUrl)
+  }
+  return fileUrls;
+}

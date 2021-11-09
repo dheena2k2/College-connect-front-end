@@ -26,6 +26,9 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useFilePicker } from 'use-file-picker';
 import {useSelector,useDispatch} from "react-redux"
 import {addpost} from "../../app/postSlice"
+import { uploadFiles } from '../../storage'
+
+
 function getGroups() {
     const groups = [
         'College',
@@ -99,10 +102,7 @@ function UploadDialog(props) {
     const [tempUrl, setTempUrl] = React.useState('')
     const [allowMultiple, setAllowMultiple] = React.useState(false)
     const fileType = postType !== 'file' ? postType+'/*' : '*'
-    const [openFileSelector, { filesContent, loading, errors }] = useFilePicker({
-        multiple: allowMultiple,
-        accept: fileType
-    })
+    const [fileUrls, setFileUrls] = React.useState([])
 
     const entryChange = (event) => {
         setFinalUrl(event.target.value)
@@ -119,12 +119,23 @@ function UploadDialog(props) {
     }
 
     const selectFiles = () => {
-        openFileSelector()
+        document.getElementById('upload-in').click()
+    }
+
+    const handleFileUpload = async (event) => {
+        const files = event.target.files
+        let tempUrlHolder = []
+        if(event.target.files.length > 0) {
+            tempUrlHolder = await uploadFiles(files)
+        }
+        setFileUrls(tempUrlHolder)
     }
 
     React.useEffect(() => {
-        console.log('Uploaded file', filesContent)
-    }, [filesContent])
+        for(let url of fileUrls) {
+            console.log(url)
+        }
+    }, [fileUrls])
 
 
     return (
@@ -180,12 +191,22 @@ function UploadDialog(props) {
                         </Typography>}
 
                         {postType !== 'youtube' &&
+                        <>
+                        <input 
+                            type="file" 
+                            id="upload-in" 
+                            accept={fileType}
+                            style={{display:"none"}}
+                            multiple={allowMultiple}
+                            onChange={handleFileUpload}
+                        />
                         <Button
                         onClick={selectFiles}
                         variant='contained'
                         endIcon={<UploadIcon />}>
                             Upload
-                        </Button>}
+                        </Button>
+                        </>}
 
                         <Button
                         variant='contained' >
