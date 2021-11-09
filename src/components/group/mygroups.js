@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import { grey } from '@mui/material/colors';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Button } from '@mui/material';
 
 
 function GroupCell({group}) {
@@ -54,7 +55,16 @@ function GroupCell({group}) {
                 }}>
                     {description}
                 </Typography>
+                
             </Box>
+            <Button 
+                variant="contained" 
+                style={{display:"block",marginLeft:"auto",marginRight:"0"}}
+                component={Link}
+                to={`/editgroup/${groupID}`}
+            >
+                    edit group
+            </Button>
         </div>
     );
 }
