@@ -98,7 +98,7 @@ function PrimaryInfo(props) {
                         sx={{
                             fontStyle: 'italic'
                         }} >
-                            {props.rollno}
+                            {props.rollNo}
                         </Typography>
                     </div>
                     <div>
@@ -127,7 +127,7 @@ function PrimaryInfo(props) {
                     fontStyle: 'italic',
                     paddingTop: '20px'
                 }} >
-                    {'Joined the institution at ' + props.admissionyear}
+                    {'Joined the institution at ' + props.admissionYear}
                 </Typography>
                 <div
                 style={{

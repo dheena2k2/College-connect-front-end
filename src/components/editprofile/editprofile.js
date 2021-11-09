@@ -75,10 +75,10 @@ function EntryBox(props) {
     const dispatch = useDispatch();
     const entry_label = {
         name: 'Name',
-        rollno: 'Roll number',
+        rollNo: 'Roll number',
         description: 'Description',
         email: 'E-mail',
-        admissionyear: 'Year of admission',
+        admissionYear: 'Year of admission',
         branch: 'Branch',
         dob: 'Date of birth'}
 
@@ -88,11 +88,11 @@ function EntryBox(props) {
 
     const [details, setDetails] = React.useState({
         name: props.name,
-        profileUrl: props.profileurl,
-        rollno: props.rollno,
+        profileUrl: props.profileUrl,
+        rollNo: props.rollNo,
         description: props.description,
         email: props.email,
-        admissionyear: props.admissionyear,
+        admissionYear: props.admissionYear,
         branch: props.branch,
         dob: props.dob})
 
@@ -144,7 +144,7 @@ function EntryBox(props) {
                     width: '200px',
                     height: '200px',
                 }}
-                src={details.profileurl}
+                src={details.profileUrl}
                 alt={details.name} />
             </Badge>
             <div className='editprofile-entrylist'>
