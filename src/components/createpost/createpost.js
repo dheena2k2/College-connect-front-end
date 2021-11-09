@@ -106,6 +106,10 @@ function UploadDialog(props) {
 
     const entryChange = (event) => {
         setFinalUrl(event.target.value)
+        if(event.target.value.length > 0)
+            setFileUrls([event.target.value])
+        else
+            setFileUrls([])
     }
 
     const typeChange = (event, newVal) => {
@@ -116,6 +120,7 @@ function UploadDialog(props) {
         setFinalUrl('')
         setTempUrl('')
         setPostType(newVal)
+        setFileUrls([])
     }
 
     const selectFiles = () => {
@@ -131,12 +136,16 @@ function UploadDialog(props) {
         setFileUrls(tempUrlHolder)
     }
 
-    React.useEffect(() => {
-        for(let url of fileUrls) {
-            console.log(url)
+    const onSubmit = () => {
+        props.fileLinksSetter(fileUrls)
+        if(fileUrls.length > 0) {
+            props.fileTypeSetter(postType)
         }
-    }, [fileUrls])
-
+        else {
+            props.fileTypeSetter('plain')
+        }
+        onClose()
+    }
 
     return (
         <Dialog
@@ -209,6 +218,7 @@ function UploadDialog(props) {
                         </>}
 
                         <Button
+                        onClick={onSubmit}
                         variant='contained' >
                             Done
                         </Button>
@@ -313,6 +323,7 @@ function SelectGroupDialog(props) {
 
 
 function CreatePostEntry() {
+    const user = useSelector(state=>state.user.user);
     const [description, setDescription] = React.useState('')
     const [postType, setPostType] = React.useState('multimedia')
     const [finalPostType, setFinalPostType] = React.useState('plain')
@@ -322,14 +333,15 @@ function CreatePostEntry() {
     const [dialogOpen, setDialogOpen] = React.useState(false)
     const [groups, setGroups] = React.useState([])
     const [selectGroupOpen, setSelectGroupOpen] = React.useState(false)
+    const [fileLinks, setFileLinks] = React.useState([])
     const dispatch = useDispatch();
+
     const openDialog = () => {
         setDialogOpen(true)
     }
 
     const onDialogClose = () => {
         setDialogOpen(false)
-        setGroups(groups)
     }
 
     const entryChange = (event, byEnterPress) => {
@@ -425,17 +437,26 @@ function CreatePostEntry() {
     }
     const addPost = () => {
         console.log("adding post");
-        var newpost = {
-            ID: 'JXF23D4',
-            ownerID: 'luffy55',
-            ownerProfileUrl: 'https://i1.sndcdn.com/avatars-UidYWfW20bjki8Ub-GJKpBQ-t500x500.jpg',
+        let newpost = {
+            ownerID: user.username,
+            ownerProfileUrl: user.profileUrl,
             createdTime: new Date(),
-            type: 'image',
-            file_links: ['https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'],
-            description: 'It is just a stunning lake. Take in the beauty, sit back, take a deep breath and relax',
-            groups: ['vacation', 'counciling', 'batch19', 'batch18']
+            type: finalPostType,
+            description: description,
+            groups: groups
         }
-        dispatch(addpost(newpost));
+        if(finalPostType === 'poll') {
+            newpost["pollStatus"] = 'active'
+            newpost["pollData"] = {
+                options: pollOptions.slice(0, optionNos),
+                votes: new Array(optionNos).fill(0)
+            }
+        }
+        else {
+            newpost["file_links"] = fileLinks
+        }
+        console.log(newpost)
+        // dispatch(addpost(newpost));
     }
 
     return (
@@ -514,7 +535,9 @@ function CreatePostEntry() {
                 </Button>
                 <UploadDialog
                 open={dialogOpen}
-                onClose={onDialogClose} />
+                onClose={onDialogClose}
+                fileTypeSetter={setFinalPostType}
+                fileLinksSetter={setFileLinks} />
                 </>}
 
                 {postType === 'poll' &&
