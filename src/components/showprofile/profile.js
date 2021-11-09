@@ -6,8 +6,9 @@ import EmailIcon from '@mui/icons-material/Email';
 import Divider from '@mui/material/Divider';
 import Avatar from '@mui/material/Avatar';
 import CakeIcon from '@mui/icons-material/Cake';
+import {Link} from "react-router-dom";
 import {useSelector} from "react-redux"
-import Box from '@mui/material/Box'
+import {Box,Button} from '@mui/material'
 
 function getDateString(d) {
     const month_name = [
@@ -160,6 +161,14 @@ function PrimaryInfo(props) {
                         {props.dob && getDateString(new Date(props.dob))}
                     </Typography>
                 </div>
+                <Button 
+                    variant="contained" 
+                    style={{display:"block",marginLeft:"auto",marginRight:"0"}}
+                    component={Link}
+                    to={`/editprofile`}
+                >
+                        edit profile
+                </Button>
             </div>
         </div>
     );
