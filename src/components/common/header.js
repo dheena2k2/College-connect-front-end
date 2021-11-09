@@ -59,6 +59,12 @@ function Options(props) {
                 </ListItemIcon>
                 My Groups
             </MenuItem>
+            <MenuItem component={Link} to='creategroup'>
+                <ListItemIcon>
+                    <GroupsIcon />
+                </ListItemIcon>
+                Create group
+            </MenuItem>
             <MenuItem component={Link} to='users'>
                 <ListItemIcon>
                     <PersonSearchIcon />
@@ -96,7 +102,7 @@ export default function Header(props) {
     React.useEffect(()=>{
         var initializestates = async ()=>{
             var users = await getUsers();
-            users.data && users.data.users && dispatch(setusers(users));
+            users.data && users.data.users && dispatch(setusers(users.data.users));
             var posts = await getPosts();
             posts.data && posts.data.posts && dispatch(setposts(posts.data.posts));
             var groups = await getGroups();

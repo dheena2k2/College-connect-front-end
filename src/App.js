@@ -19,6 +19,7 @@ import './App.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from "./CRUD/readFunctions";
 import {setuser} from "./app/userSlice";
+import CreateGroup from "./components/creategroup/creategroup";
 function findIsLoggedin(user) {
   console.log("user",user,Boolean(user));
   return Boolean(user && user.username);
@@ -69,15 +70,19 @@ function LoggedOutRoute({children, user, ...rest}) {  // can be accessed only if
 
 function App() {
   const user = useSelector(state=>state.user.user);
+  const users = useSelector(state=>state.contacts.users);
   const dispatch = useDispatch();
+  const [loading,setLoading] =React.useState(true);
   const isLoggedin = user;
   React.useEffect(()=>{
     (async () => {
       var res = await getUser();
       //console.log(res.data.user)
       if(res.data && res.data.user)dispatch(setuser(res.data.user));
+      setLoading(false);
     })();
   },[])
+  if(loading)return <div>loading...</div>
   return (
     <Router className="App">
       <Switch>
@@ -98,7 +103,7 @@ function App() {
 
         <PrivateRoute path='/users' user={user}>
           <Header loggedin={isLoggedin} />
-          <UserTable isCurrentUser={true} />
+          <UserTable isCurrentUser={true} users={users}/>
         </PrivateRoute>
 
         <PrivateRoute path='/editprofile' user={user}>
@@ -115,7 +120,14 @@ function App() {
           <Header loggedin={isLoggedin} />
           <Group />
         </PrivateRoute>
-
+        <PrivateRoute path='/creategroup' user={user}>
+          <Header loggedin={isLoggedin} />
+          <CreateGroup />
+        </PrivateRoute>
+        <PrivateRoute path='/editgroup/:id' user={user}>
+          <Header loggedin={isLoggedin} />
+          <CreateGroup />
+        </PrivateRoute>
         <PrivateRoute path='/mygroups' user={user}>
           <Header loggedin={isLoggedin} />
           <MyGroups />
