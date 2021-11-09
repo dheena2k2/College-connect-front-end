@@ -44,7 +44,7 @@ function GroupCell({group}) {
                     color: grey[700],
                     fontSize: '15px'
                 }}
-                component={Link} to={'group/' + groupId}>
+                component={Link} to={'group/' + groupID}>
                     {'view group'}
                 </Typography>
                 <Typography
