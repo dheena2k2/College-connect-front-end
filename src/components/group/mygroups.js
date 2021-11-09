@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import { grey } from '@mui/material/colors';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Button } from '@mui/material';
+import { Button,Chip } from '@mui/material';
 
 
 function GroupCell({group}) {
@@ -13,7 +13,8 @@ function GroupCell({group}) {
     const groupID = group._id;
     const groupName = group.name;
     const description = group.description;
-
+    const owners = group.owners;
+    const visibleTo = group.visibleTo;
     return (
         <div className='mygroups-innercontainer'>
             <GroupPic
@@ -55,7 +56,16 @@ function GroupCell({group}) {
                 }}>
                     {description}
                 </Typography>
-                
+                <Box style={{marginTop:"5px"}}>
+                    <Typography style={{fontFamily:"arvo",fontWeight:"bolder",fontStyle: 'italic',}}>Owners</Typography>
+                   {owners.map((owner)=><Chip label={owner.name} key={owner._id}/>)}
+                       
+                </Box>
+                <Box style={{marginTop:"5px"}}>
+                    <Typography style={{fontFamily:"arvo",fontWeight:"bolder",fontStyle: 'italic',}}>Participants</Typography>
+                   {visibleTo.map((owner)=><Chip label={owner.name} key={owner._id}/>)}
+                       
+                </Box>
             </Box>
             <Button 
                 variant="contained" 
