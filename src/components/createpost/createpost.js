@@ -27,6 +27,7 @@ import { useFilePicker } from 'use-file-picker';
 import {useSelector,useDispatch} from "react-redux"
 import {addpost} from "../../app/postSlice"
 import { uploadFiles } from '../../storage'
+import LinearProgress from '@mui/material/LinearProgress';
 
 
 function getGroups() {
@@ -51,44 +52,65 @@ function getGroups() {
 }
 
 
-function FilePreview({type, finalUrl}) {
+function FilePreview({type, finalUrl, onRemoveAttachment, isUploading}) {
     return (
         <div className='createpost-file-review'>
 
-            {type === 'image' && finalUrl === '' &&
+            {isUploading &&
+            <LinearProgress />}
+
+            {type === 'image' && finalUrl === '' && !isUploading &&
             <ImageIcon sx={{color: grey[500], fontSize: 100}} />}
             
-            {type === 'audio' && finalUrl === '' &&
+            {type === 'audio' && finalUrl === '' && !isUploading &&
             <AudiotrackIcon sx={{color: grey[500], fontSize: 100}} />}
             
-            {type === 'video' && finalUrl === '' &&
+            {type === 'video' && finalUrl === '' && !isUploading &&
             <VideocamIcon sx={{color: grey[500], fontSize: 100}} />}
             
-            {type === 'youtube' && finalUrl === '' &&
+            {type === 'youtube' && finalUrl === '' && !isUploading &&
             <YouTubeIcon sx={{color: grey[500], fontSize: 100}} />}
             
-            {type === 'files' && finalUrl === '' &&
+            {type === 'files' && finalUrl === '' && !isUploading &&
             <FileCopyIcon sx={{color: grey[500], fontSize: 100}} />}
 
             
             
-            {type === 'image' && finalUrl !== '' &&
+            {type === 'image' && finalUrl !== '' && !isUploading &&
             <img className='createpost-img' src={finalUrl} alt='error' />}
 
-            {type === 'video' && finalUrl !== '' &&
+            {type === 'video' && finalUrl !== '' && !isUploading &&
             <video width='100%' controls>
                 <source src={finalUrl} />
             </video>}
 
-            {type === 'youtube' && finalUrl !== '' &&
+            {type === 'youtube' && finalUrl !== '' && !isUploading &&
             <ReactPlayer
             controls
             url={finalUrl} />}
 
-            {type === 'audio' && finalUrl !== '' &&
+            {type === 'audio' && finalUrl !== '' && !isUploading &&
             <ReactAudioPlayer
             controls
             src={finalUrl} />}
+
+            {type === 'files' && finalUrl !== '' && !isUploading &&
+            <Typography
+            sx={{
+                fontFamily: 'arvo',
+                fontWeight: 'bold',
+                fontSize: '20px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItem: 'center'
+            }}>
+                Files Uploaded
+                <Button
+                onClick={onRemoveAttachment}
+                variant='text'>
+                    Remove files
+                </Button>
+            </Typography>}
 
         </div>
     );
@@ -103,6 +125,7 @@ function UploadDialog(props) {
     const [allowMultiple, setAllowMultiple] = React.useState(false)
     const fileType = postType !== 'file' ? postType+'/*' : '*'
     const [fileUrls, setFileUrls] = React.useState([])
+    const [isUploading, setIsUploading] = React.useState(false)
 
     const entryChange = (event) => {
         setFinalUrl(event.target.value)
@@ -127,6 +150,12 @@ function UploadDialog(props) {
         document.getElementById('upload-in').click()
     }
 
+    const removeAttachments = () => {
+        setFinalUrl('')
+        setTempUrl('')
+        setFileUrls([])
+    }
+
     const handleFileUpload = async (event) => {
         const files = event.target.files
         let tempUrlHolder = []
@@ -137,7 +166,7 @@ function UploadDialog(props) {
             setFinalUrl('')
             setTempUrl('')
         }
-        if(postType !== 'files' && tempUrlHolder.length === 1) {
+        if(tempUrlHolder.length > 0) {
             setFinalUrl(tempUrlHolder[0])
             setTempUrl(tempUrlHolder[0])
         }
@@ -185,7 +214,11 @@ function UploadDialog(props) {
                     alignItems: 'center',
                     justifyContent: 'space-between'
                 }}>
-                    <FilePreview type={postType} finalUrl={finalUrl} />
+                    <FilePreview
+                    type={postType}
+                    finalUrl={finalUrl}
+                    onRemoveAttachment={removeAttachments}
+                    isUploading={isUploading} />
 
                     <div className='createpost-upload-bar'>
                         {postType !== 'files' &&
