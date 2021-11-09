@@ -4,13 +4,14 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { grey } from '@mui/material/colors';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
-function GroupCell() {
-    const profileUrl = ''
-    const groupId = 'sample1'
-    const groupName = 'Sample Group'
-    const description = 'This is sample. This is sample. This is sample. This is sample. This is sample. This is sample. This is sample. This is sample. This is sample. This is sample.'
+function GroupCell({group}) {
+    const profileUrl = group.profileUrl;
+    const groupID = group._id;
+    const groupName = group.name;
+    const description = group.description;
 
     return (
         <div className='mygroups-innercontainer'>
@@ -42,7 +43,7 @@ function GroupCell() {
                     fontSize: '15px'
                 }}
                 component={Link} to='group'>
-                    {'ID: ' + groupId}
+                    {'ID: ' + groupID}
                 </Typography>
                 <Typography
                 sx={{
@@ -60,9 +61,12 @@ function GroupCell() {
 
 
 function MyGroups() {
+    const groups = useSelector(state=>state.contacts.groups);
     return (
         <div className='mygroups-container'>
-            <GroupCell />
+            <Typography variant="h3" align="center" style={{margin:"20px",fontFamily:"arvo",fontWeight:"700"}}>My groups</Typography>
+            {groups.map((group)=><GroupCell key={group._id} group={group}/>)}
+            
         </div>
     );
 }

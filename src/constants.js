@@ -1,1 +1,1 @@
-export const URL = "https://college-connect-server.herokuapp.com/";
+export const URL = "http://college-connect-server.herokuapp.com/";

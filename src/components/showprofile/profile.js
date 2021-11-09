@@ -170,9 +170,7 @@ function Profile(props) {
     const user = useSelector(state=>state.user.user);
     return (
         <div className='profile-container'>
-            <h1 className='profile-title'>
-                User Profile
-            </h1>
+            <Typography variant="h3" style={{margin:"20px",fontFamily:"arvo",fontWeight:"800"}}>User Profile</Typography>
             <div className='profile-subcontainer'>
                 <PrimaryInfo isCurrentUser={props.isCurrentUser} {...user} />
             </div>

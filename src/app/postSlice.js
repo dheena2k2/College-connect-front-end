@@ -27,7 +27,7 @@ export const postSlice = createSlice({
     deletepost: (state, action) => {
         var newposts = []
         for(var post of state.posts){
-            if(post._id==action.payload._id){
+            if(post._id==action.payload){
                 continue;
             }
             else{

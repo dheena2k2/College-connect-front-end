@@ -16,10 +16,17 @@ import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import { publishedPollPostDetails } from './stub';
+import { deletepost } from '../../app/postSlice';
+import {deletePost as deletePostCRUD} from "../../CRUD/deleteFunctions";
+import { useDispatch } from 'react-redux';
+async function deletePost(postID,dispatch) {
+    var sure = window.confirm('Are you sure you want to delete this post');
+    console.log("delting this post",postID);
+    var res = await deletePostCRUD(postID);
+    if(res.data && res.data.post){
+        dispatch(deletepost(postID));
+    }
 
-
-function deletePost(postId) {
-    var sure = window.confirm('Are you sure you want to delete this post')
 }
 
 
@@ -61,6 +68,7 @@ function dateToString(currentdate) {
 
 function PostContainer(props) {
     const currentUser = true
+    const dispatch = useDispatch();
     return (
         <div className='post-container'>
             <div className='post-container-head'>
@@ -72,10 +80,11 @@ function PostContainer(props) {
                     src={props.ownerProfileUrl}
                     alt={props.ownerID} />
                     <Typography sx={{
-                        fontStyle: 'italic',
+                        fontWeight:"600",
+                        fontSize:"1.5rem",
                         fontFamily: 'arvo'
                     }} >
-                        {props.ownerID}
+                        {props.ownerID.charAt(0).toUpperCase() + props.ownerID.substr(1).toLowerCase()}
                     </Typography>
                 </div>
                 <div>
@@ -105,7 +114,7 @@ function PostContainer(props) {
                         </Typography>
                         {currentUser &&
                         <IconButton
-                        onClick={() => deletePost(props.ID)}>
+                        onClick={() => deletePost(props._id,dispatch)}>
                             <DeleteIcon />
                         </IconButton>}
                     </Box>
@@ -241,16 +250,16 @@ export function Post(props) {
 
             <Typography sx={{
                 fontFamily: 'arvo',
-                color: grey[500],
+                color: grey[1000],
                 fontStyle: 'italic',
-                marginTop: '20px'
+                margin: '10px 5px'
             }}>
                 {props.description}
             </Typography>
 
             {props.type === 'poll'&&
             <PollOptions
-            postId={props.ID}
+            postId={props._id}
             options={props.options}
             status={props.pollStatus} />}
             </div>

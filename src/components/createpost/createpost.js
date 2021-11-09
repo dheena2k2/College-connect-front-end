@@ -527,7 +527,7 @@ function CreatePostEntry() {
         var res = await createPost(newpost);
         console.log("post result",res);
         if(res.data && res.data.post)dispatch(addpost(res.data.post));
-        dispatch(addpost(newpost));
+        //dispatch(addpost(newpost));
     }
 
     return (
