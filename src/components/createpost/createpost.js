@@ -53,11 +53,16 @@ function getGroups() {
 
 
 function FilePreview({type, finalUrl, onRemoveAttachment, isUploading}) {
+    React.useEffect(()=>{
+        console.log("loading",isUploading)
+    },[isUploading])
     return (
         <div className='createpost-file-review'>
 
             {isUploading &&
-            <LinearProgress />}
+            <Box sx={{ width: '700px' }}>
+                <LinearProgress />
+            </Box>}
 
             {type === 'image' && finalUrl === '' && !isUploading &&
             <ImageIcon sx={{color: grey[500], fontSize: 100}} />}
@@ -77,7 +82,7 @@ function FilePreview({type, finalUrl, onRemoveAttachment, isUploading}) {
             
             
             {type === 'image' && finalUrl !== '' && !isUploading &&
-            <img className='createpost-img' src={finalUrl} alt='error' />}
+            <img style={{maxWidth:"80vw",maxHeight:"80vh"}} className='createpost-img' src={finalUrl} alt='error' />}
 
             {type === 'video' && finalUrl !== '' && !isUploading &&
             <video width='100%' controls>
@@ -126,7 +131,9 @@ function UploadDialog(props) {
     const fileType = postType !== 'file' ? postType+'/*' : '*'
     const [fileUrls, setFileUrls] = React.useState([])
     const [isUploading, setIsUploading] = React.useState(false)
+    React.useEffect(()=>{
 
+    },[props.open])
     const entryChange = (event) => {
         setFinalUrl(event.target.value)
         if(event.target.value.length > 0)
@@ -160,7 +167,9 @@ function UploadDialog(props) {
         const files = event.target.files
         let tempUrlHolder = []
         if(event.target.files.length > 0) {
+            setIsUploading(true)
             tempUrlHolder = await uploadFiles(files)
+            setIsUploading(false)
         }
         else {
             setFinalUrl('')
