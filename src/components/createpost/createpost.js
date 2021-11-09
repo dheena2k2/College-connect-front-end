@@ -29,6 +29,7 @@ import {addpost} from "../../app/postSlice"
 import {createPost} from "../../CRUD/createFunctions"; 
 import { uploadFiles } from '../../storage'
 import LinearProgress from '@mui/material/LinearProgress';
+import { useHistory } from 'react-router-dom';
 
 
 function getGroups() {
@@ -403,6 +404,7 @@ function CreatePostEntry() {
     const [fileLinks, setFileLinks] = React.useState([])
     const dispatch = useDispatch();
     const isAttached = (fileLinks.length > 0)
+    const history = useHistory();
 
     const openDialog = () => {
         setDialogOpen(true)
@@ -527,7 +529,7 @@ function CreatePostEntry() {
         var res = await createPost(newpost);
         console.log("post result",res);
         if(res.data && res.data.post)dispatch(addpost(res.data.post));
-        //dispatch(addpost(newpost));
+        history.push('/')
     }
 
     return (
