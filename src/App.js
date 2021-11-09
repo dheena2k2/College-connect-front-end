@@ -71,14 +71,17 @@ function LoggedOutRoute({children, user, ...rest}) {  // can be accessed only if
 function App() {
   const user = useSelector(state=>state.user.user);
   const dispatch = useDispatch();
+  const [loading,setLoading] =React.useState(true);
   const isLoggedin = user;
   React.useEffect(()=>{
     (async () => {
       var res = await getUser();
       //console.log(res.data.user)
       if(res.data && res.data.user)dispatch(setuser(res.data.user));
+      setLoading(false);
     })();
   },[])
+  if(loading)return <div>loading...</div>
   return (
     <Router className="App">
       <Switch>
@@ -117,6 +120,10 @@ function App() {
           <Group />
         </PrivateRoute>
         <PrivateRoute path='/creategroup' user={user}>
+          <Header loggedin={isLoggedin} />
+          <CreateGroup />
+        </PrivateRoute>
+        <PrivateRoute path='/editgroup/:id' user={user}>
           <Header loggedin={isLoggedin} />
           <CreateGroup />
         </PrivateRoute>

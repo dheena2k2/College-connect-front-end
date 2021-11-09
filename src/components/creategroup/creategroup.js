@@ -12,9 +12,12 @@ import {Button,Grid,Typography,FormControl,InputLabel,Select,Chip,OutlinedInput,
 import { uploadFiles } from '../../storage';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../../CRUD/updateFunction'; 
-import { addgroup } from '../../app/contactSlice';
+import { addgroup, updategroup} from '../../app/contactSlice';
 import UserTable from "../users/usertable";
 import {createGroup} from "../../CRUD/createFunctions";
+import { getGroup } from '../../CRUD/readFunctions';
+import { useLocation } from 'react-router';
+import {updateGroup} from "../../CRUD/updateFunction"
 
 function getUserByID(userID,users){
     for(var user of users){
@@ -25,11 +28,19 @@ function getUserByID(userID,users){
 
 }
 
+function getIDarray(arr){
+    var ids=[]
+    for(var obj of arr){
+        ids.push(obj._id);
+    }
+    return ids;
+}
 
-
-export default function CreateGroup(){
+export default function CreateGroup({groupID}){
     const dispatch = useDispatch();
     const users = useSelector(state=>state.contacts.users);
+    const groups = useSelector(state=>state.contacts.groups);
+    const location = useLocation();
     const [details,setDetails] = React.useState({
         name:"",
         profileUrl:"",
@@ -37,6 +48,21 @@ export default function CreateGroup(){
         owners:[],
         visibleTo:[],
     })
+    const [mode,setMode] = React.useState("create");
+    React.useEffect(()=>{
+        var {pathname} = location;
+        var arr = pathname.split("/");
+        var id = arr.length && arr[arr.length-1];
+        if(id!="creategroup"){
+            for(var group of groups){
+                if(group._id==id){
+                    setMode('edit');
+                    setDetails({...group,owners:getIDarray(group.owners),visibleTo:getIDarray(group.visibleTo)});
+                }
+            }
+        }
+    },[groups])
+    
     const handleChangeValue = (e) => {
         var ngrp = {...details,[e.target.name]:e.target.value};
         setDetails(ngrp);
@@ -56,15 +82,30 @@ export default function CreateGroup(){
     }
     const handleSave = async()=>{
         console.log(details);
-        var res = await createGroup(details);
-        if(res.data && res.data.group){
-            dispatch(addgroup(res.data.group));
+
+        var res;
+        if(mode=="create"){
+            res =await createGroup(details);
+            if(res.data && res.data.group){
+                dispatch(addgroup(res.data.group));
+            }
         }
+        else{
+            res =await updateGroup(details);
+            if(res.data && res.data.group){
+                dispatch(updategroup(res.data.group));
+            }
+            console.log(res,details);
+        }
+        
     }
+    React.useEffect(()=>{
+
+    },[])
     return (
         <Grid container alignContent='center' justifyContent="center" alignItems="center" style={{padding:"20px 250px"}}>
             <Grid item xs={12}>
-            <Typography variant="h4" align="center" style={{margin:"20px"}}>Create Group</Typography>
+            <Typography variant="h4" align="center" style={{margin:"20px"}}>{mode=="create"?"Create":"Edit"} Group</Typography>
             </Grid>
             <input 
                 type="file" 
