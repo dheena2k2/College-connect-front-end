@@ -186,7 +186,7 @@ export default function StickyHeadTable(props) {
                     tabIndex={-1} 
                     key={row.code} 
                     component={Link} 
-                    to={"/profile"} 
+                    to={"/profile/"+row._id} 
                     style={{textDecoration:"none"}}
                   >
                     {columns.map((column) => {

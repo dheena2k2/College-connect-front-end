@@ -123,7 +123,7 @@ function EntryBox(props) {
 
     const saveChanges = (passedDetails, passedDispatch) => {
         onSaveChanges(passedDetails, passedDispatch)
-        history.push('/profile')
+        history.push('/profile/' + props._id)
     }
 
     return (

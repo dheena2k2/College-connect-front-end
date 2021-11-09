@@ -7,7 +7,8 @@ import Divider from '@mui/material/Divider';
 import Avatar from '@mui/material/Avatar';
 import CakeIcon from '@mui/icons-material/Cake';
 import {useSelector} from "react-redux"
-import Box from '@mui/material/Box'
+import React from 'react';
+import {useLocation} from "react-router-dom";
 
 function getDateString(d) {
     const month_name = [
@@ -167,12 +168,38 @@ function PrimaryInfo(props) {
 
 
 function Profile(props) {
-    const user = useSelector(state=>state.user.user);
+    const location = useLocation()
+    const currUser = useSelector(state=>state.user.user);
+    const users = useSelector(state=>state.contacts.users);
+    const [details, setDetails] = React.useState(null);
+    let isCurrentUser = false
+    React.useEffect(()=>{
+        var {pathname} = location;
+        var arr = pathname.split("/");
+        var id = arr.length && arr[arr.length-1];
+        for(var user of users){
+            if(user._id==id){
+                setDetails(user);
+            }
+        }
+    },[])
+
+    if(details === null) {
+        return (
+            <div>User does not exists</div>
+        );
+    }
+    if(currUser._id === details._id) {
+        isCurrentUser = true
+    }
+
+    const dispDetails = isCurrentUser ? currUser : details
+
     return (
         <div className='profile-container'>
             <Typography variant="h3" style={{margin:"20px",fontFamily:"arvo",fontWeight:"800"}}>User Profile</Typography>
             <div className='profile-subcontainer'>
-                <PrimaryInfo isCurrentUser={props.isCurrentUser} {...user} />
+                <PrimaryInfo isCurrentUser={isCurrentUser} {...dispDetails} />
             </div>
         </div>
     );

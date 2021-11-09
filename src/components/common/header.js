@@ -17,6 +17,7 @@ import {getPosts,getGroups,getUsers} from '../../CRUD/readFunctions';
 import { useDispatch } from 'react-redux';
 import { setgroups, setusers } from '../../app/contactSlice';
 import { setposts } from '../../app/postSlice';
+import {useSelector} from "react-redux"
 
 function onLogout(setCookie) {
     document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
@@ -25,6 +26,7 @@ function onLogout(setCookie) {
 
 
 function Options(props) {
+    const currUser = useSelector(state=>state.user.user);
     const [ , setCookie] = useCookies(['isLoggedin'])
     return (
         <Menu
@@ -41,31 +43,31 @@ function Options(props) {
                 </ListItemIcon>
                 Home
             </MenuItem>
-            <MenuItem component={Link} to='profile'>
+            <MenuItem component={Link} to={'/profile/'+currUser._id}>
                 <ListItemIcon>
                     <AccountCircleIcon />
                 </ListItemIcon>
                 Profile
             </MenuItem>
-            <MenuItem component={Link} to='editprofile'>
+            <MenuItem component={Link} to='/editprofile'>
                 <ListItemIcon>
                     <EditIcon />
                 </ListItemIcon>
                 Edit profile
             </MenuItem>
-            <MenuItem component={Link} to='mygroups'>
+            <MenuItem component={Link} to='/mygroups'>
                 <ListItemIcon>
                     <GroupsIcon />
                 </ListItemIcon>
                 My Groups
             </MenuItem>
-            <MenuItem component={Link} to='creategroup'>
+            <MenuItem component={Link} to='/creategroup'>
                 <ListItemIcon>
                     <GroupsIcon />
                 </ListItemIcon>
                 Create group
             </MenuItem>
-            <MenuItem component={Link} to='users'>
+            <MenuItem component={Link} to='/users'>
                 <ListItemIcon>
                     <PersonSearchIcon />
                 </ListItemIcon>

@@ -96,9 +96,9 @@ function App() {
           <NewUser />
         </LoggedOutRoute>
 
-        <PrivateRoute path='/profile' user={user}>
+        <PrivateRoute path='/profile/:id' user={user}>
           <Header loggedin={isLoggedin} />
-          <Profile isCurrentUser={true} />
+          <Profile />
         </PrivateRoute>
 
         <PrivateRoute path='/users' user={user}>

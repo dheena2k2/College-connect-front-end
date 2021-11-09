@@ -37,16 +37,30 @@ function GroupCell({group}) {
                 }}>
                     {groupName}
                 </Typography>
+                <Box>
                 <Typography
                 sx={{
                     fontFamily: 'arvo',
                     fontStyle: 'italic',
                     color: grey[700],
-                    fontSize: '15px'
+                    fontSize: '15px',
+                    marginRight: '5px'
                 }}
-                component={Link} to={'group/' + groupId}>
+                component={Link} to={'group/' + groupID}>
                     {'view group'}
                 </Typography>
+                <Typography
+                sx={{
+                    fontFamily: 'arvo',
+                    fontStyle: 'italic',
+                    color: grey[700],
+                    fontSize: '15px',
+                    marginLeft: '5px'
+                }}
+                component={Link} to={'editgroup/' + groupID}>
+                    {'edit group'}
+                </Typography>
+                </Box>
                 <Typography
                 sx={{
                     fontFamily: 'arvo',
@@ -67,14 +81,6 @@ function GroupCell({group}) {
                        
                 </Box>
             </Box>
-            <Button 
-                variant="contained" 
-                style={{display:"block",marginLeft:"auto",marginRight:"0"}}
-                component={Link}
-                to={`/editgroup/${groupID}`}
-            >
-                    edit group
-            </Button>
         </div>
     );
 }
