@@ -82,7 +82,17 @@ function FilePreview({type, finalUrl, onRemoveAttachment, isUploading}) {
             
             
             {type === 'image' && finalUrl !== '' && !isUploading &&
-            <img style={{maxWidth:"80vw",maxHeight:"80vh"}} className='createpost-img' src={finalUrl} alt='error' />}
+            <Box
+            sx={{
+                width: '800px',
+                height: '350px',
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center'
+            }}>
+                <img className='createpost-img' src={finalUrl} alt='error' />
+            </Box>}
 
             {type === 'video' && finalUrl !== '' && !isUploading &&
             <video width='100%' controls>
@@ -131,9 +141,15 @@ function UploadDialog(props) {
     const fileType = postType !== 'file' ? postType+'/*' : '*'
     const [fileUrls, setFileUrls] = React.useState([])
     const [isUploading, setIsUploading] = React.useState(false)
-    React.useEffect(()=>{
 
+    React.useEffect(()=>{
+        if(props.open && props.fileLinks.length > 0) {
+            setFinalUrl(props.fileLinks[0])
+            setTempUrl(props.fileLinks[0])
+            setFileUrls(props.fileLinks)
+        }
     },[props.open])
+
     const entryChange = (event) => {
         setFinalUrl(event.target.value)
         if(event.target.value.length > 0)
@@ -588,7 +604,8 @@ function CreatePostEntry() {
                 open={dialogOpen}
                 onClose={onDialogClose}
                 fileTypeSetter={setFinalPostType}
-                fileLinksSetter={setFileLinks} />
+                fileLinksSetter={setFileLinks}
+                fileLinks={fileLinks} />
                 </>}
 
                 {postType === 'poll' &&
