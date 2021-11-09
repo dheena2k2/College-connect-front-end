@@ -19,6 +19,8 @@ import { publishedPollPostDetails } from './stub';
 import { deletepost } from '../../app/postSlice';
 import {deletePost as deletePostCRUD} from "../../CRUD/deleteFunctions";
 import { useDispatch } from 'react-redux';
+
+
 async function deletePost(postID,dispatch) {
     var sure = window.confirm('Are you sure you want to delete this post');
     console.log("delting this post",postID);
@@ -67,7 +69,7 @@ function dateToString(currentdate) {
 
 
 function PostContainer(props) {
-    const currentUser = true
+    const currentUser = props.isCurrentUser
     const dispatch = useDispatch();
     return (
         <div className='post-container'>
