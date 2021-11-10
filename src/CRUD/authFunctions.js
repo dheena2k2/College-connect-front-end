@@ -26,3 +26,15 @@ export async function signup(data){
      console.log("result is",result);
      return result;
 }
+
+export async function logout(data){
+    var result = await axios({
+        method: 'get',
+        withCredentials:true,
+        url: URL+"logout",
+        data:data
+        
+     })    
+     console.log("result is",result);
+     return result;
+}

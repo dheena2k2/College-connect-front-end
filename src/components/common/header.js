@@ -18,10 +18,13 @@ import { useDispatch } from 'react-redux';
 import { setgroups, setusers } from '../../app/contactSlice';
 import { setposts } from '../../app/postSlice';
 import {useSelector} from "react-redux"
+import {logout} from "../../CRUD/authFunctions";
 
-function onLogout(setCookie) {
-    document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
-    window.location.href = '/login'
+async function onLogout(setCookie) {
+    var res = await logout();
+    console.log(res);
+    window.location.href = '/login';
+    console.log("called");
 }
 
 
