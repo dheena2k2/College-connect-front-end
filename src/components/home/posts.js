@@ -19,6 +19,7 @@ import { publishedPollPostDetails } from './stub';
 import { deletepost } from '../../app/postSlice';
 import {deletePost as deletePostCRUD} from "../../CRUD/deleteFunctions";
 import { useDispatch } from 'react-redux';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
 
 
 async function deletePost(postID,dispatch) {
@@ -263,6 +264,24 @@ export function Post(props) {
             postId={props._id}
             options={props.options}
             status={props.pollStatus} />}
+
+            {props.type === 'files' &&
+            <Box
+            sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                flexWrap: 'wrap'
+            }}>
+                {props.file_links.map((link, i) => (
+                    <a key={i} href={link} target='blank'>
+                    <Chip
+                    sx={{
+                        margin: '5px 5px 5px 5px'
+                    }}
+                    icon={<AttachFileIcon />}
+                    label={'file '+(i+1)} /></a>
+                ))}
+            </Box>}
             </div>
         </PostContainer>
     );
