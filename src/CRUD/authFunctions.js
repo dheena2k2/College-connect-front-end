@@ -29,10 +29,9 @@ export async function signup(data){
 
 export async function logout(data){
     var result = await axios({
-        method: 'get',
+        method: 'post',
         withCredentials:true,
         url: URL+"logout",
-        data:data
         
      })    
      console.log("result is",result);
