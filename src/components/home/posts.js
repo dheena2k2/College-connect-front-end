@@ -159,7 +159,6 @@ function PostContainer(props) {
 
 function PollOptions({postId, options, status}) {
     var chosenOption = null
-    return <div></div>
     if(status === 'active') {
         let i = 0
         for(let key of Object.keys(options)) {
