@@ -73,7 +73,7 @@ function App() {
   const users = useSelector(state=>state.contacts.users);
   const dispatch = useDispatch();
   const [loading,setLoading] =React.useState(true);
-  const isLoggedin = user;
+  const isLoggedin = findIsLoggedin(user);
   React.useEffect(()=>{
     (async () => {
       var res = await getUser();
