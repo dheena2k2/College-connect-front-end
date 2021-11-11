@@ -163,6 +163,7 @@ function PrimaryInfo(props) {
                         {props.dob && getDateString(new Date(props.dob))}
                     </Typography>
                 </div>
+                {props.isCurrentUser &&
                 <Button 
                     variant="contained" 
                     style={{display:"block",marginLeft:"auto",marginRight:"0"}}
@@ -170,7 +171,7 @@ function PrimaryInfo(props) {
                     to={`/editprofile`}
                 >
                         edit profile
-                </Button>
+                </Button>}
             </div>
         </div>
     );
